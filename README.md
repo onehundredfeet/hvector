@@ -2,7 +2,15 @@
 
 **Requires [haxe 4.2+](https://haxe.org/download/)**
 
-Haxe vector math library that enables GLSL vector and matrix operations to compile in haxe
+Haxe vector math library that enables GLSL vector and matrix operations to compile in haxe.
+
+## Acknowledgements
+The original vector library by [haxiomic] is a great, lightweight, compatible vector library. The original GLSL inspiration is fantastic.  To be more compatible with Haxe I wanted to update it with a few features / ideas.
+
+1) Provide both Single & Float(Double in Haxe) implementations that align with the both Haxe / GLSL terminology as closely as possible
+2) Add macros to add fields to classes without separate allocation
+
+These augmentations will be a work in progress and it's likely that master will be unstabale until a formal release.
 
 ## Features
 
