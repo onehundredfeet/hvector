@@ -4,7 +4,7 @@
 
 Haxe vector math library that enables GLSL vector and matrix operations to compile in haxe.
 
-## Acknowledgements
+## Acknowledgements by [onehundredfeet]
 The original vector library by [haxiomic] is a great, lightweight, compatible vector library. The original GLSL inspiration is fantastic.  To be more compatible with Haxe I wanted to update it with a few features / ideas.
 
 1) Provide both Single & Float(Double in Haxe) implementations that align with the both Haxe / GLSL terminology as closely as possible
