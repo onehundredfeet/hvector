@@ -1,10 +1,10 @@
 {
-	"name": "vector-math",
+	"name": "hvector",
 	"description": "GLSL vector math implementation that enables GLSL vector and matrix operations to compile in haxe. Usage: `import VectorMath;`",
 	"license": "MIT",
 	"tags": ["vector", "math", "linear-algebra", "linear", "algebra", "matrix", "opengl", "glsl", "shader"],
-	"contributors": ["haxiomic"],
-	"url": "https://github.com/haxiomic/vector-math",
-	"version": "2.1.1",
+	"contributors": ["haxiomic", "onehundredfeet"],
+	"url": "https://github.com/onehundredfeet/hvector",
+	"version": "2.1.2",
 	"releasenote": "Fix issue reading single value using swizzle aliases "
 }
