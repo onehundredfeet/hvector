@@ -39,7 +39,7 @@ function swizzleReadExprF(self: haxe.macro.Expr, name: String) {
 	}
 }
 
-function swizzleWriteExprF(self: haxe.macro.Expr, name: String value) {
+function swizzleWriteExprF(self: haxe.macro.Expr, name: String, value) {
 	var f = fields(name);
 	var f0 = f[0];
 	var f1 = f[1];

@@ -444,11 +444,11 @@ abstract Float4(Float4Data) to Float4Data from Float4Data {
 
 	// macros
 	@:op(a.b) macro function swizzleRead(self, name: String) {
-		return VectorMath.swizzleReadExprF(self, name);
+		return VectorMathF.swizzleReadExprF(self, name);
 	}
 
 	@:op(a.b) macro function swizzleWrite(self, name: String, value) {
-		return VectorMath.swizzleWriteExprF(self, name, value);
+		return VectorMathF.swizzleWriteExprF(self, name, value);
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
