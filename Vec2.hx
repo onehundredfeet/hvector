@@ -1,6 +1,6 @@
 #if (vector_math_f32 && (cpp || hl || cs || java))
-// override Float (usually f64) type with f32
-@:eager private typedef Float = Single;
+// override Single (usually f64) type with f32
+//@:eager private typedef Single = Single;
 #end
 
 @:nullSafety
@@ -8,14 +8,14 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 
 	#if !macro
 
-	public var x (get, set): Float;
+	public var x (get, set): Single;
 	inline function get_x() return this.x;
-	inline function set_x(v: Float) return this.x = v;
-	public var y (get, set): Float;
+	inline function set_x(v: Single) return this.x = v;
+	public var y (get, set): Single;
 	inline function get_y() return this.y;
-	inline function set_y(v: Float) return this.y = v;
+	inline function set_y(v: Single) return this.y = v;
 
-	public inline function new(x: Float, y: Float) {
+	public inline function new(x: Single, y: Single) {
 		this = new Vec2Data(x, y);
 	}
 
@@ -151,7 +151,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	public extern overload inline function mod(d: Vec2): Vec2 {
 		return (this: Vec2) - d * ((this: Vec2) / d).floor();
 	}
-	public extern overload inline function mod(d: Float): Vec2 {
+	public extern overload inline function mod(d: Single): Vec2 {
 		return (this: Vec2) - d * ((this: Vec2) / d).floor();
 	}
 	public extern overload inline function min(b: Vec2): Vec2 {
@@ -160,7 +160,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 			b.y < y ? b.y : y
 		);
 	}
-	public extern overload inline function min(b: Float): Vec2 {
+	public extern overload inline function min(b: Single): Vec2 {
 		return new Vec2(
 			b < x ? b : x,
 			b < y ? b : y
@@ -172,7 +172,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 			y < b.y ? b.y : y
 		);
 	}
-	public extern overload inline function max(b: Float): Vec2 {
+	public extern overload inline function max(b: Single): Vec2 {
 		return new Vec2(
 			x < b ? b : x,
 			y < b ? b : y
@@ -181,14 +181,14 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	public extern overload inline function clamp(minLimit: Vec2, maxLimit: Vec2) {
 		return max(minLimit).min(maxLimit);
 	}
-	public extern overload inline function clamp(minLimit: Float, maxLimit: Float) {
+	public extern overload inline function clamp(minLimit: Single, maxLimit: Single) {
 		return max(minLimit).min(maxLimit);
 	}
 
 	public extern overload inline function mix(b: Vec2, t: Vec2): Vec2 {
 		return (this: Vec2) * (1.0 - t) + b * t;
 	}
-	public extern overload inline function mix(b: Vec2, t: Float): Vec2 {
+	public extern overload inline function mix(b: Vec2, t: Single): Vec2 {
 		return (this: Vec2) * (1.0 - t) + b * t;
 	}
 
@@ -198,7 +198,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 			y < edge.y ? 0.0 : 1.0
 		);
 	}
-	public extern overload inline function step(edge: Float): Vec2 {
+	public extern overload inline function step(edge: Single): Vec2 {
 		return new Vec2(
 			x < edge ? 0.0 : 1.0,
 			y < edge ? 0.0 : 1.0
@@ -209,19 +209,19 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		var t = (((this: Vec2) - edge0) / (edge1 - edge0)).clamp(0, 1);
 		return t * t * (3.0 - 2.0 * t);
 	}
-	public extern overload inline function smoothstep(edge0: Float, edge1: Float): Vec2 {
+	public extern overload inline function smoothstep(edge0: Single, edge1: Single): Vec2 {
 		var t = (((this: Vec2) - edge0) / (edge1 - edge0)).clamp(0, 1);
 		return t * t * (3.0 - 2.0 * t);
 	}
 
 	// Geometric
-	public inline function length(): Float {
+	public inline function length(): Single {
 		return Math.sqrt(x*x + y*y);
 	}	
-	public inline function distance(b: Vec2): Float {
+	public inline function distance(b: Vec2): Single {
 		return (b - this).length();
 	}
-	public inline function dot(b: Vec2): Float {
+	public inline function dot(b: Vec2): Single {
 		return x * b.x + y * b.y;
 	}
 	public inline function normalize(): Vec2 {
@@ -238,7 +238,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		var I = (this: Vec2);
 		return I - 2 * N.dot(I) * N;
 	}
-	public inline function refract(N: Vec2, eta: Float): Vec2 {
+	public inline function refract(N: Vec2, eta: Single): Vec2 {
 		var I = (this: Vec2);
 		var nDotI = N.dot(I);
 		var k = 1.0 - eta * eta * (1.0 - nDotI * nDotI);
@@ -248,7 +248,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	}
 
 	public inline function toString() {
-		return 'vec2(${x}, ${y})';
+		return 'Vec2(${x}, ${y})';
 	}
 
 	@:op([])
@@ -260,7 +260,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		}
 
 	@:op([])
-	inline function arrayWrite(i: Int, v: Float)
+	inline function arrayWrite(i: Int, v: Single)
 		return switch i {
 			case 0: x = v;
 			case 1: y = v;
@@ -307,7 +307,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		return a.copyFrom(a * b);
 
 	@:op(a *= b)
-	static inline function mulEqScalar(a: Vec2, f: Float): Vec2
+	static inline function mulEqScalar(a: Vec2, f: Single): Vec2
 		return a.copyFrom(a * f);
 
 	@:op(a /= b)
@@ -315,7 +315,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		return a.copyFrom(a / b);
 
 	@:op(a /= b)
-	static inline function divEqScalar(a: Vec2, f: Float): Vec2
+	static inline function divEqScalar(a: Vec2, f: Single): Vec2
 		return a.copyFrom(a / f);
 
 	@:op(a += b)
@@ -323,7 +323,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		return a.copyFrom(a + b);
 
 	@:op(a += b)
-	static inline function addEqScalar(a: Vec2, f: Float): Vec2
+	static inline function addEqScalar(a: Vec2, f: Single): Vec2
 		return a.copyFrom(a + f);
 
 	@:op(a -= b)
@@ -331,7 +331,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		return a.copyFrom(a - b);
 
 	@:op(a -= b)
-	static inline function subEqScalar(a: Vec2, f: Float): Vec2
+	static inline function subEqScalar(a: Vec2, f: Single): Vec2
 		return a.copyFrom(a - f);
 
 	@:op(a * b)
@@ -339,7 +339,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		return new Vec2(a.x * b.x, a.y * b.y);
 
 	@:op(a * b) @:commutative
-	static inline function mulScalar(a: Vec2, b: Float): Vec2
+	static inline function mulScalar(a: Vec2, b: Single): Vec2
 		return new Vec2(a.x * b, a.y * b);
 
 	@:op(a / b)
@@ -347,11 +347,11 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		return new Vec2(a.x / b.x, a.y / b.y);
 
 	@:op(a / b)
-	static inline function divScalar(a: Vec2, b: Float): Vec2
+	static inline function divScalar(a: Vec2, b: Single): Vec2
 		return new Vec2(a.x / b, a.y / b);
 	
 	@:op(a / b)
-	static inline function divScalarInv(a: Float, b: Vec2): Vec2
+	static inline function divScalarInv(a: Single, b: Vec2): Vec2
 		return new Vec2(a / b.x, a / b.y);
 
 	@:op(a + b)
@@ -359,7 +359,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		return new Vec2(a.x + b.x, a.y + b.y);
 
 	@:op(a + b) @:commutative
-	static inline function addScalar(a: Vec2, b: Float): Vec2
+	static inline function addScalar(a: Vec2, b: Single): Vec2
 		return new Vec2(a.x + b, a.y + b);
 
 	@:op(a - b)
@@ -367,11 +367,11 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		return new Vec2(a.x - b.x, a.y - b.y);
 
 	@:op(a - b)
-	static inline function subScalar(a: Vec2, b: Float): Vec2
+	static inline function subScalar(a: Vec2, b: Single): Vec2
 		return new Vec2(a.x - b, a.y - b);
 
 	@:op(b - a)
-	static inline function subScalarInv(a: Float, b: Vec2): Vec2
+	static inline function subScalarInv(a: Single, b: Vec2): Vec2
 		return new Vec2(a - b.x, a - b.y);
 
 	@:op(a == b)
@@ -390,11 +390,11 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	}
 
 	@:op(a.b) macro function swizzleWrite(self, name: String, value) {
-		return VectorMath.swizzleWriteExpr(self, name, value);
+		return VectorMath.swizzleWriteExpr(self, name,  value);
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
-	public macro function copyIntoArray(self: haxe.macro.Expr.ExprOf<Vec2>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Float>>, index: haxe.macro.Expr.ExprOf<Int>) {
+	public macro function copyIntoArray(self: haxe.macro.Expr.ExprOf<Vec2>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Single>>, index: haxe.macro.Expr.ExprOf<Int>) {
 		return macro {
 			var self = $self;
 			var array = $array;
@@ -408,13 +408,14 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 }
 
 @:noCompletion
+@:struct
 class Vec2Data {
 	#if !macro
-	public var x: Float;
-	public var y: Float;
+	public var x: Single;
+	public var y: Single;
 
-	public inline function new(x: Float, y: Float) {
-		// the + 0.0 helps the optimizer realize it can collapse const float operations
+	public inline function new(x: Single, y: Single) {
+		// the + 0.0 helps the optimizer realize it can collapse const Single operations
 		this.x = x + 0.0;
 		this.y = y + 0.0;
 	}

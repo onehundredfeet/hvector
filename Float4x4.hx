@@ -1,19 +1,19 @@
 #if (vector_math_f32 && (cpp || hl || cs || java))
-// override Single (usually f64) type with f32
-//@:eager private typedef Single = Single;
+// override Float (usually f64) type with f32
+//@:eager private typedef Float = Float;
 #end
 
-abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
+abstract Float4x4(Float4x4Data) from Float4x4Data to Float4x4Data {
 
 	#if !macro
 
 	public inline function new(
-		a00: Single, a01: Single, a02: Single, a03: Single,
-		a10: Single, a11: Single, a12: Single, a13: Single,
-		a20: Single, a21: Single, a22: Single, a23: Single,
-		a30: Single, a31: Single, a32: Single, a33: Single
+		a00: Float, a01: Float, a02: Float, a03: Float,
+		a10: Float, a11: Float, a12: Float, a13: Float,
+		a20: Float, a21: Float, a22: Float, a23: Float,
+		a30: Float, a31: Float, a32: Float, a33: Float
 	) {
-		this = new Mat4Data(
+		this = new Float4x4Data(
 			a00, a01, a02, a03,
 			a10, a11, a12, a13,
 			a20, a21, a22, a23,
@@ -21,8 +21,8 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		);
 	}
 	
-	public inline function copyFrom(v: Mat4) {
-		var v: Mat4Data = v;
+	public inline function copyFrom(v: Float4x4) {
+		var v: Float4x4Data = v;
 		this.c0.copyFrom(v.c0);
 		this.c1.copyFrom(v.c1);
 		this.c2.copyFrom(v.c2);
@@ -30,8 +30,8 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		return this;
 	}
 
-	public inline function clone(): Mat4 {
-		return new Mat4(
+	public inline function clone(): Float4x4 {
+		return new Float4x4(
 			this.c0.x, this.c0.y, this.c0.z, this.c0.w,
 			this.c1.x, this.c1.y, this.c1.z, this.c1.w,
 			this.c2.x, this.c2.y, this.c2.z, this.c2.w,
@@ -39,10 +39,10 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		);
 	}
 	
-	public inline function matrixCompMult(n: Mat4): Mat4 {
+	public inline function matrixCompMult(n: Float4x4): Float4x4 {
 		var m = this;
-		var n: Mat4Data = n;
-		return new Mat4(
+		var n: Float4x4Data = n;
+		return new Float4x4(
 			m.c0.x * n.c0.x, m.c0.y * n.c0.y, m.c0.z * n.c0.z, m.c0.w * n.c0.w,
 			m.c1.x * n.c1.x, m.c1.y * n.c1.y, m.c1.z * n.c1.z, m.c1.w * n.c1.w,
 			m.c2.x * n.c2.x, m.c2.y * n.c2.y, m.c2.z * n.c2.z, m.c2.w * n.c2.w,
@@ -52,9 +52,9 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 
 	// extended methods
 
-	public inline function transpose(): Mat4 {
+	public inline function transpose(): Float4x4 {
 		var m = this;
-		return new Mat4(
+		return new Float4x4(
 			m.c0.x, m.c1.x, m.c2.x, m.c3.x,
 			m.c0.y, m.c1.y, m.c2.y, m.c3.y,
 			m.c0.z, m.c1.z, m.c2.z, m.c3.z,
@@ -62,7 +62,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		);
 	}
 
-	public inline function determinant(): Single {
+	public inline function determinant(): Float {
 		var m = this;
 		var b0 = m.c0.x * m.c1.y - m.c0.y * m.c1.x;
 		var b1 = m.c0.x * m.c1.z - m.c0.z * m.c1.x;
@@ -77,7 +77,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		return m.c1.w * b6 - m.c0.w * b7 + m.c3.w * b8 - m.c2.w * b9;
 	}
 
-	public inline function inverse(): Mat4 {
+	public inline function inverse(): Float4x4 {
 		var m = this;
 		var b00 = m.c0.x * m.c1.y - m.c0.y * m.c1.x;
 		var b01 = m.c0.x * m.c1.z - m.c0.z * m.c1.x;
@@ -97,7 +97,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 
 		var f = 1.0 / det;
 
-		return new Mat4(
+		return new Float4x4(
 			(m.c1.y * b11 - m.c1.z * b10 + m.c1.w * b09) * f,
 			(m.c0.z * b10 - m.c0.y * b11 - m.c0.w * b09) * f,
 			(m.c3.y * b05 - m.c3.z * b04 + m.c3.w * b03) * f,
@@ -117,7 +117,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		);
 	}
 
-	public inline function adjoint(): Mat4 {
+	public inline function adjoint(): Float4x4 {
 		var m = this;
 		var b00 = m.c0.x * m.c1.y - m.c0.y * m.c1.x;
 		var b01 = m.c0.x * m.c1.z - m.c0.z * m.c1.x;
@@ -131,7 +131,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		var b09 = m.c2.y * m.c3.z - m.c2.z * m.c3.y;
 		var b10 = m.c2.y * m.c3.w - m.c2.w * m.c3.y;
 		var b11 = m.c2.z * m.c3.w - m.c2.w * m.c3.z;
-		return new Mat4(
+		return new Float4x4(
 			m.c1.y * b11 - m.c1.z * b10 + m.c1.w * b09,
 			m.c0.z * b10 - m.c0.y * b11 - m.c0.w * b09,
 			m.c3.y * b05 - m.c3.z * b04 + m.c3.w * b03,
@@ -152,7 +152,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 	
 	public inline function toString() {
-		return 'mat4(' +
+		return 'Float4x4(' +
 			'${this.c0.x}, ${this.c0.y}, ${this.c0.z}, ${this.c0.w}, ' +
 			'${this.c1.x}, ${this.c1.y}, ${this.c1.z}, ${this.c1.w}, ' +
 			'${this.c2.x}, ${this.c2.y}, ${this.c2.z}, ${this.c2.w}, ' +
@@ -171,7 +171,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		}
 
 	@:op([])
-	inline function arrayWrite(i: Int, v: Vec4)
+	inline function arrayWrite(i: Int, v: Float4)
 		return switch i {
 			case 0: this.c0.copyFrom(v);
 			case 1: this.c1.copyFrom(v);
@@ -181,9 +181,9 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		}
 
 	@:op(-a)
-	static inline function neg(m: Mat4) {
-		var m: Mat4Data = m;
-		return new Mat4(
+	static inline function neg(m: Float4x4) {
+		var m: Float4x4Data = m;
+		return new Float4x4(
 			-m.c0.x, -m.c0.y, -m.c0.z, -m.c0.w,
 			-m.c1.x, -m.c1.y, -m.c1.z, -m.c1.w,
 			-m.c2.x, -m.c2.y, -m.c2.z, -m.c2.w,
@@ -192,73 +192,73 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(++a)
-	static inline function prefixIncrement(m: Mat4) {
-		var _m: Mat4Data = m;
+	static inline function prefixIncrement(m: Float4x4) {
+		var _m: Float4x4Data = m;
 		++_m.c0; ++_m.c1; ++_m.c2; ++_m.c3;
 		return m.clone();
 	}
 
 	@:op(--a)
-	static inline function prefixDecrement(m: Mat4) {
-		var _m: Mat4Data = m;
+	static inline function prefixDecrement(m: Float4x4) {
+		var _m: Float4x4Data = m;
 		--_m.c0; --_m.c1; --_m.c2; --_m.c3;
 		return m.clone();
 	}
 
 	@:op(a++)
-	static inline function postfixIncrement(m: Mat4) {
+	static inline function postfixIncrement(m: Float4x4) {
 		var ret = m.clone();
-		var m: Mat4Data = m;
+		var m: Float4x4Data = m;
 		++m.c0; ++m.c1; ++m.c2; ++m.c3;
 		return ret;
 	}
 
 	@:op(a--)
-	static inline function postfixDecrement(m: Mat4) {
+	static inline function postfixDecrement(m: Float4x4) {
 		var ret = m.clone();
-		var m: Mat4Data = m;
+		var m: Float4x4Data = m;
 		--m.c0; --m.c1; --m.c2; --m.c3;
 		return ret;
 	}
 
 	// assignment overload should come before other binary ops to ensure they have priority
 	@:op(a *= b)
-	static inline function mulEq(a: Mat4, b: Mat4): Mat4
+	static inline function mulEq(a: Float4x4, b: Float4x4): Float4x4
 		return a.copyFrom(a * b);
 
 	@:op(a *= b)
-	static inline function mulEqScalar(a: Mat4, f: Single): Mat4
+	static inline function mulEqScalar(a: Float4x4, f: Float): Float4x4
 		return a.copyFrom(a * f);
 
 	@:op(a /= b)
-	static inline function divEq(a: Mat4, b: Mat4): Mat4
+	static inline function divEq(a: Float4x4, b: Float4x4): Float4x4
 		return a.copyFrom(a / b);
 
 	@:op(a /= b)
-	static inline function divEqScalar(a: Mat4, f: Single): Mat4
+	static inline function divEqScalar(a: Float4x4, f: Float): Float4x4
 		return a.copyFrom(a / f);
 
 	@:op(a += b)
-	static inline function addEq(a: Mat4, b: Mat4): Mat4
+	static inline function addEq(a: Float4x4, b: Float4x4): Float4x4
 		return a.copyFrom(a + b);
 
 	@:op(a += b)
-	static inline function addEqScalar(a: Mat4, f: Single): Mat4
+	static inline function addEqScalar(a: Float4x4, f: Float): Float4x4
 		return a.copyFrom(a + f);
 
 	@:op(a -= b)
-	static inline function subEq(a: Mat4, b: Mat4): Mat4
+	static inline function subEq(a: Float4x4, b: Float4x4): Float4x4
 		return a.copyFrom(a - b);
 
 	@:op(a -= b)
-	static inline function subEqScalar(a: Mat4, f: Single): Mat4
+	static inline function subEqScalar(a: Float4x4, f: Float): Float4x4
 		return a.copyFrom(a - f);
 
 	@:op(a + b)
-	static inline function add(m: Mat4, n: Mat4): Mat4 {
-		var m: Mat4Data = m;
-		var n: Mat4Data = n;
-		return new Mat4(
+	static inline function add(m: Float4x4, n: Float4x4): Float4x4 {
+		var m: Float4x4Data = m;
+		var n: Float4x4Data = n;
+		return new Float4x4(
 			m.c0.x + n.c0.x, m.c0.y + n.c0.y, m.c0.z + n.c0.z, m.c0.w + n.c0.w,
 			m.c1.x + n.c1.x, m.c1.y + n.c1.y, m.c1.z + n.c1.z, m.c1.w + n.c1.w,
 			m.c2.x + n.c2.x, m.c2.y + n.c2.y, m.c2.z + n.c2.z, m.c2.w + n.c2.w,
@@ -267,9 +267,9 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a + b) @:commutative
-	static inline function addScalar(m: Mat4, f: Single): Mat4 {
-		var m: Mat4Data = m;
-		return new Mat4(
+	static inline function addScalar(m: Float4x4, f: Float): Float4x4 {
+		var m: Float4x4Data = m;
+		return new Float4x4(
 			m.c0.x + f, m.c0.y + f, m.c0.z + f, m.c0.w + f,
 			m.c1.x + f, m.c1.y + f, m.c1.z + f, m.c1.w + f,
 			m.c2.x + f, m.c2.y + f, m.c2.z + f, m.c2.w + f,
@@ -278,10 +278,10 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a - b)
-	static inline function sub(m: Mat4, n: Mat4): Mat4 {
-		var m: Mat4Data = m;
-		var n: Mat4Data = n;
-		return new Mat4(
+	static inline function sub(m: Float4x4, n: Float4x4): Float4x4 {
+		var m: Float4x4Data = m;
+		var n: Float4x4Data = n;
+		return new Float4x4(
 			m.c0.x - n.c0.x, m.c0.y - n.c0.y, m.c0.z - n.c0.z, m.c0.w - n.c0.w,
 			m.c1.x - n.c1.x, m.c1.y - n.c1.y, m.c1.z - n.c1.z, m.c1.w - n.c1.w,
 			m.c2.x - n.c2.x, m.c2.y - n.c2.y, m.c2.z - n.c2.z, m.c2.w - n.c2.w,
@@ -290,9 +290,9 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a - b)
-	static inline function subScalar(m: Mat4, f: Single): Mat4 {
-		var m: Mat4Data = m;
-		return new Mat4(
+	static inline function subScalar(m: Float4x4, f: Float): Float4x4 {
+		var m: Float4x4Data = m;
+		return new Float4x4(
 			m.c0.x - f, m.c0.y - f, m.c0.z - f, m.c0.w - f,
 			m.c1.x - f, m.c1.y - f, m.c1.z - f, m.c1.w - f,
 			m.c2.x - f, m.c2.y - f, m.c2.z - f, m.c2.w - f,
@@ -301,9 +301,9 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a - b)
-	static inline function subScalarInv(f: Single, m: Mat4): Mat4 {
-		var m: Mat4Data = m;
-		return new Mat4(
+	static inline function subScalarInv(f: Float, m: Float4x4): Float4x4 {
+		var m: Float4x4Data = m;
+		return new Float4x4(
 			f - m.c0.x, f - m.c0.y, f - m.c0.z, f - m.c0.w,
 			f - m.c1.x, f - m.c1.y, f - m.c1.z, f - m.c1.w,
 			f - m.c2.x, f - m.c2.y, f - m.c2.z, f - m.c2.w,
@@ -314,10 +314,10 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	
 
 	@:op(a * b)
-	static inline function mul(m: Mat4, n: Mat4): Mat4 {
-		var m: Mat4Data = m;
-		var n: Mat4Data = n;
-		return new Mat4(
+	static inline function mul(m: Float4x4, n: Float4x4): Float4x4 {
+		var m: Float4x4Data = m;
+		var n: Float4x4Data = n;
+		return new Float4x4(
 			m.c0.x * n.c0.x + m.c1.x * n.c0.y + m.c2.x * n.c0.z + m.c3.x * n.c0.w,
 			m.c0.y * n.c0.x + m.c1.y * n.c0.y + m.c2.y * n.c0.z + m.c3.y * n.c0.w,
 			m.c0.z * n.c0.x + m.c1.z * n.c0.y + m.c2.z * n.c0.z + m.c3.z * n.c0.w,
@@ -338,9 +338,9 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 	
 	@:op(a * b)
-	static inline function postMulVec4(m: Mat4, v: Vec4): Vec4 {
-		var m: Mat4Data = m;
-		return new Vec4(
+	static inline function postMulFloat4(m: Float4x4, v: Float4): Float4 {
+		var m: Float4x4Data = m;
+		return new Float4(
 			m.c0.x * v.x + m.c1.x * v.y + m.c2.x * v.z + m.c3.x * v.w,
 			m.c0.y * v.x + m.c1.y * v.y + m.c2.y * v.z + m.c3.y * v.w,
 			m.c0.z * v.x + m.c1.z * v.y + m.c2.z * v.z + m.c3.z * v.w,
@@ -349,9 +349,9 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a * b)
-	static inline function preMulVec4(v: Vec4, m: Mat4): Vec4 {
-		var m: Mat4Data = m;
-		return new Vec4(
+	static inline function preMulFloat4(v: Float4, m: Float4x4): Float4 {
+		var m: Float4x4Data = m;
+		return new Float4(
 			v.dot(m.c0),
 			v.dot(m.c1),
 			v.dot(m.c2),
@@ -360,9 +360,9 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a * b) @:commutative
-	static inline function mulScalar(m: Mat4, f: Single): Mat4 {
-		var m: Mat4Data = m;
-		return new Mat4(
+	static inline function mulScalar(m: Float4x4, f: Float): Float4x4 {
+		var m: Float4x4Data = m;
+		return new Float4x4(
 			m.c0.x * f, m.c0.y * f, m.c0.z * f, m.c0.w * f,
 			m.c1.x * f, m.c1.y * f, m.c1.z * f, m.c1.w * f,
 			m.c2.x * f, m.c2.y * f, m.c2.z * f, m.c2.w * f,
@@ -371,13 +371,13 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a / b)
-	static inline function div(m: Mat4, n: Mat4): Mat4
+	static inline function div(m: Float4x4, n: Float4x4): Float4x4
 		return m.matrixCompMult(1.0 / n);
 
 	@:op(a / b)
-	static inline function divScalar(m: Mat4, f: Single): Mat4 {
-		var m: Mat4Data = m;
-		return new Mat4(
+	static inline function divScalar(m: Float4x4, f: Float): Float4x4 {
+		var m: Float4x4Data = m;
+		return new Float4x4(
 			m.c0.x / f, m.c0.y / f, m.c0.z / f, m.c0.w / f,
 			m.c1.x / f, m.c1.y / f, m.c1.z / f, m.c1.w / f,
 			m.c2.x / f, m.c2.y / f, m.c2.z / f, m.c2.w / f,
@@ -386,9 +386,9 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a / b)
-	static inline function divScalarInv(f: Single, m: Mat4): Mat4 {
-		var m: Mat4Data = m;
-		return new Mat4(
+	static inline function divScalarInv(f: Float, m: Float4x4): Float4x4 {
+		var m: Float4x4Data = m;
+		return new Float4x4(
 			f / m.c0.x, f / m.c0.y, f / m.c0.z, f / m.c0.w,
 			f / m.c1.x, f / m.c1.y, f / m.c1.z, f / m.c1.w,
 			f / m.c2.x, f / m.c2.y, f / m.c2.z, f / m.c2.w,
@@ -397,9 +397,9 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a == b)
-	static inline function equal(m: Mat4, n: Mat4): Bool {
-		var m: Mat4Data = m;
-		var n: Mat4Data = n;
+	static inline function equal(m: Float4x4, n: Float4x4): Bool {
+		var m: Float4x4Data = m;
+		var n: Float4x4Data = n;
 		return
 			m.c0 == n.c0 &&
 			m.c1 == n.c1 &&
@@ -408,7 +408,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a != b)
-	static inline function notEqual(m: Mat4, n: Mat4): Bool
+	static inline function notEqual(m: Float4x4, n: Float4x4): Bool
 		return !equal(m, n);
 
 	#end // !macro
@@ -417,7 +417,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		Copies matrix elements in column-major order into a type that supports array-write access
 	**/
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
-	public macro function copyIntoArray(self: haxe.macro.Expr.ExprOf<Mat4>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Single>>, index: haxe.macro.Expr.ExprOf<Int>) {
+	public macro function copyIntoArray(self: haxe.macro.Expr.ExprOf<Float4x4>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Float>>, index: haxe.macro.Expr.ExprOf<Int>) {
 		return macro  {
 			var self = $self;
 			var array = $array;
@@ -433,23 +433,23 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 }
 
 @:noCompletion
-class Mat4Data {
+class Float4x4Data {
 	#if !macro
-	public var c0: Vec4;
-	public var c1: Vec4;
-	public var c2: Vec4;
-	public var c3: Vec4;
+	public var c0: Float4;
+	public var c1: Float4;
+	public var c2: Float4;
+	public var c3: Float4;
 
 	public inline function new(
-		a00: Single, a01: Single, a02: Single, a03: Single,
-		a10: Single, a11: Single, a12: Single, a13: Single,
-		a20: Single, a21: Single, a22: Single, a23: Single,
-		a30: Single, a31: Single, a32: Single, a33: Single
+		a00: Float, a01: Float, a02: Float, a03: Float,
+		a10: Float, a11: Float, a12: Float, a13: Float,
+		a20: Float, a21: Float, a22: Float, a23: Float,
+		a30: Float, a31: Float, a32: Float, a33: Float
 	) {
-		c0 = new Vec4(a00, a01, a02, a03);
-		c1 = new Vec4(a10, a11, a12, a13);
-		c2 = new Vec4(a20, a21, a22, a23);
-		c3 = new Vec4(a30, a31, a32, a33);
+		c0 = new Float4(a00, a01, a02, a03);
+		c1 = new Float4(a10, a11, a12, a13);
+		c2 = new Float4(a20, a21, a22, a23);
+		c3 = new Float4(a30, a31, a32, a33);
 	}
 	#end
 }

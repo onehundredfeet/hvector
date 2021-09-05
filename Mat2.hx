@@ -1,6 +1,6 @@
 #if (vector_math_f32 && (cpp || hl || cs || java))
-// override Float (usually f64) type with f32
-@:eager private typedef Float = Single;
+// override Single (usually f64) type with f32
+//@:eager private typedef Single = Single;
 #end
 
 abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
@@ -8,8 +8,8 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 	#if !macro
 
 	public inline function new(
-		a00: Float, a01: Float,
-		a10: Float, a11: Float
+		a00: Single, a01: Single,
+		a10: Single, a11: Single
 	) {
 		this = new Mat2Data(
 			a00, a01,
@@ -48,7 +48,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 		);
 	}
 
-	public inline function determinant(): Float {
+	public inline function determinant(): Single {
 		var m = this;
 		return m.c0.x * m.c1.y - m.c1.x * m.c0.y;
 	}
@@ -142,7 +142,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 		return a.copyFrom(a * b);
 
 	@:op(a *= b)
-	static inline function mulEqScalar(a: Mat2, f: Float): Mat2
+	static inline function mulEqScalar(a: Mat2, f: Single): Mat2
 		return a.copyFrom(a * f);
 
 	@:op(a /= b)
@@ -150,7 +150,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 		return a.copyFrom(a / b);
 
 	@:op(a /= b)
-	static inline function divEqScalar(a: Mat2, f: Float): Mat2
+	static inline function divEqScalar(a: Mat2, f: Single): Mat2
 		return a.copyFrom(a / f);
 
 	@:op(a += b)
@@ -158,7 +158,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 		return a.copyFrom(a + b);
 
 	@:op(a += b)
-	static inline function addEqScalar(a: Mat2, f: Float): Mat2
+	static inline function addEqScalar(a: Mat2, f: Single): Mat2
 		return a.copyFrom(a + f);
 
 	@:op(a -= b)
@@ -166,7 +166,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 		return a.copyFrom(a - b);
 
 	@:op(a -= b)
-	static inline function subEqScalar(a: Mat2, f: Float): Mat2
+	static inline function subEqScalar(a: Mat2, f: Single): Mat2
 		return a.copyFrom(a - f);
 
 	@:op(a + b)
@@ -180,7 +180,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 	}
 
 	@:op(a + b) @:commutative
-	static inline function addScalar(m: Mat2, f: Float): Mat2 {
+	static inline function addScalar(m: Mat2, f: Single): Mat2 {
 		var m: Mat2Data = m;
 		return new Mat2(
 			m.c0.x + f, m.c0.y + f,
@@ -199,7 +199,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 	}
 
 	@:op(a - b)
-	static inline function subScalar(m: Mat2, f: Float): Mat2 {
+	static inline function subScalar(m: Mat2, f: Single): Mat2 {
 		var m: Mat2Data = m;
 		return new Mat2(
 			m.c0.x - f, m.c0.y - f,
@@ -208,7 +208,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 	}
 
 	@:op(a - b)
-	static inline function subScalarInv(f: Float, m: Mat2): Mat2 {
+	static inline function subScalarInv(f: Single, m: Mat2): Mat2 {
 		var m: Mat2Data = m;
 		return new Mat2(
 			f - m.c0.x, f - m.c0.y,
@@ -247,7 +247,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 	}
 
 	@:op(a * b) @:commutative
-	static inline function mulScalar(m: Mat2, f: Float): Mat2 {
+	static inline function mulScalar(m: Mat2, f: Single): Mat2 {
 		var m: Mat2Data = m;
 		return new Mat2(
 			m.c0.x * f, m.c0.y * f, 
@@ -261,7 +261,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 	}
 
 	@:op(a / b)
-	static inline function divScalar(m: Mat2, f: Float): Mat2 {
+	static inline function divScalar(m: Mat2, f: Single): Mat2 {
 		var m: Mat2Data = m;
 		return new Mat2(
 			m.c0.x / f, m.c0.y / f,
@@ -270,7 +270,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 	}
 
 	@:op(a / b)
-	static inline function divScalarInv(f: Float, m: Mat2): Mat2 {
+	static inline function divScalarInv(f: Single, m: Mat2): Mat2 {
 		var m: Mat2Data = m;
 		return new Mat2(
 			f / m.c0.x, f / m.c0.y,
@@ -297,7 +297,7 @@ abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 		Copies matrix elements in column-major order into a type that supports array-write access
 	**/
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
-	public macro function copyIntoArray(self: haxe.macro.Expr.ExprOf<Mat2>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Float>>, index: haxe.macro.Expr.ExprOf<Int>) {
+	public macro function copyIntoArray(self: haxe.macro.Expr.ExprOf<Mat2>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Single>>, index: haxe.macro.Expr.ExprOf<Int>) {
 		return macro  {
 			var self = $self;
 			var array = $array;
@@ -317,8 +317,8 @@ class Mat2Data {
 	public var c1: Vec2;
 
 	public inline function new(
-		a00: Float, a01: Float,
-		a10: Float, a11: Float
+		a00: Single, a01: Single,
+		a10: Single, a11: Single
 	) {
 		c0 = new Vec2(a00, a01);
 		c1 = new Vec2(a10, a11);

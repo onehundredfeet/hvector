@@ -1,6 +1,6 @@
 #if (vector_math_f32 && (cpp || hl || cs || java))
-// override Float (usually f64) type with f32
-@:eager private typedef Float = Single;
+// override Single (usually f64) type with f32
+//@:eager private typedef Single = Single;
 #end
 
 @:nullSafety
@@ -8,17 +8,17 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 
 	#if !macro
 
-	public var x (get, set): Float;
+	public var x (get, set): Single;
 	inline function get_x() return this.x;
-	inline function set_x(v: Float) return this.x = v;
-	public var y (get, set): Float;
+	inline function set_x(v: Single) return this.x = v;
+	public var y (get, set): Single;
 	inline function get_y() return this.y;
-	inline function set_y(v: Float) return this.y = v;
-	public var z (get, set): Float;
+	inline function set_y(v: Single) return this.y = v;
+	public var z (get, set): Single;
 	inline function get_z() return this.z;
-	inline function set_z(v: Float) return this.z = v;
+	inline function set_z(v: Single) return this.z = v;
 
-	public inline function new(x: Float, y: Float, z: Float) {
+	public inline function new(x: Single, y: Single, z: Single) {
 		this = new Vec3Data(x, y, z);
 	}
 
@@ -33,7 +33,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return new Vec3(x, y, z);
 	}
 
-	// special case for vec3
+	// special case for Vec3
 	public inline function cross(b: Vec3)
 		return new Vec3(
 			y * b.z - z * b.y,
@@ -180,7 +180,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 	public extern overload inline function mod(d: Vec3): Vec3 {
 		return (this: Vec3) - d * ((this: Vec3) / d).floor();
 	}
-	public extern overload inline function mod(d: Float): Vec3 {
+	public extern overload inline function mod(d: Single): Vec3 {
 		return (this: Vec3) - d * ((this: Vec3) / d).floor();
 	}
 	public extern overload inline function min(b: Vec3): Vec3 {
@@ -190,7 +190,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 			b.z < z ? b.z : z
 		);
 	}
-	public extern overload inline function min(b: Float): Vec3 {
+	public extern overload inline function min(b: Single): Vec3 {
 		return new Vec3(
 			b < x ? b : x,
 			b < y ? b : y,
@@ -204,7 +204,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 			z < b.z ? b.z : z
 		);
 	}
-	public extern overload inline function max(b: Float): Vec3 {
+	public extern overload inline function max(b: Single): Vec3 {
 		return new Vec3(
 			x < b ? b : x,
 			y < b ? b : y,
@@ -214,14 +214,14 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 	public extern overload inline function clamp(minLimit: Vec3, maxLimit: Vec3) {
 		return max(minLimit).min(maxLimit);
 	}
-	public extern overload inline function clamp(minLimit: Float, maxLimit: Float) {
+	public extern overload inline function clamp(minLimit: Single, maxLimit: Single) {
 		return max(minLimit).min(maxLimit);
 	}
 
 	public extern overload inline function mix(b: Vec3, t: Vec3): Vec3 {
 		return (this: Vec3) * (1.0 - t) + b * t;
 	}
-	public extern overload inline function mix(b: Vec3, t: Float): Vec3 {
+	public extern overload inline function mix(b: Vec3, t: Single): Vec3 {
 		return (this: Vec3) * (1.0 - t) + b * t;
 	}
 
@@ -232,7 +232,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 			z < edge.z ? 0.0 : 1.0
 		);
 	}
-	public extern overload inline function step(edge: Float): Vec3 {
+	public extern overload inline function step(edge: Single): Vec3 {
 		return new Vec3(
 			x < edge ? 0.0 : 1.0,
 			y < edge ? 0.0 : 1.0,
@@ -244,19 +244,19 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		var t = (((this: Vec3) - edge0) / (edge1 - edge0)).clamp(0, 1);
 		return t * t * (3.0 - 2.0 * t);
 	}
-	public extern overload inline function smoothstep(edge0: Float, edge1: Float): Vec3 {
+	public extern overload inline function smoothstep(edge0: Single, edge1: Single): Vec3 {
 		var t = (((this: Vec3) - edge0) / (edge1 - edge0)).clamp(0, 1);
 		return t * t * (3.0 - 2.0 * t);
 	}
 
 	// Geometric
-	public inline function length(): Float {
+	public inline function length(): Single {
 		return Math.sqrt(x*x + y*y + z*z);
 	}	
-	public inline function distance(b: Vec3): Float {
+	public inline function distance(b: Vec3): Single {
 		return (b - this).length();
 	}
-	public inline function dot(b: Vec3): Float {
+	public inline function dot(b: Vec3): Single {
 		return x * b.x + y * b.y + z * b.z;
 	}
 	public inline function normalize(): Vec3 {
@@ -273,7 +273,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		var I = (this: Vec3);
 		return I - 2 * N.dot(I) * N;
 	}
-	public inline function refract(N: Vec3, eta: Float): Vec3 {
+	public inline function refract(N: Vec3, eta: Single): Vec3 {
 		var I = (this: Vec3);
 		var nDotI = N.dot(I);
 		var k = 1.0 - eta * eta * (1.0 - nDotI * nDotI);
@@ -283,7 +283,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 	}
 
 	public inline function toString() {
-		return 'vec3(${x}, ${y}, ${z})';
+		return 'Vec3(${x}, ${y}, ${z})';
 	}
 
 	@:op([])
@@ -296,7 +296,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		}
 
 	@:op([])
-	inline function arrayWrite(i: Int, v: Float)
+	inline function arrayWrite(i: Int, v: Single)
 		return switch i {
 			case 0: x = v;
 			case 1: y = v;
@@ -344,7 +344,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return a.copyFrom(a * b);
 
 	@:op(a *= b)
-	static inline function mulEqScalar(a: Vec3, f: Float): Vec3
+	static inline function mulEqScalar(a: Vec3, f: Single): Vec3
 		return a.copyFrom(a * f);
 
 	@:op(a /= b)
@@ -352,7 +352,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return a.copyFrom(a / b);
 
 	@:op(a /= b)
-	static inline function divEqScalar(a: Vec3, f: Float): Vec3
+	static inline function divEqScalar(a: Vec3, f: Single): Vec3
 		return a.copyFrom(a / f);
 
 	@:op(a += b)
@@ -360,7 +360,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return a.copyFrom(a + b);
 
 	@:op(a += b)
-	static inline function addEqScalar(a: Vec3, f: Float): Vec3
+	static inline function addEqScalar(a: Vec3, f: Single): Vec3
 		return a.copyFrom(a + f);
 
 	@:op(a -= b)
@@ -368,7 +368,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return a.copyFrom(a - b);
 
 	@:op(a -= b)
-	static inline function subEqScalar(a: Vec3, f: Float): Vec3
+	static inline function subEqScalar(a: Vec3, f: Single): Vec3
 		return a.copyFrom(a - f);
 
 	@:op(a * b)
@@ -376,7 +376,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return new Vec3(a.x * b.x, a.y * b.y, a.z * b.z);
 
 	@:op(a * b) @:commutative
-	static inline function mulScalar(a: Vec3, b: Float): Vec3
+	static inline function mulScalar(a: Vec3, b: Single): Vec3
 		return new Vec3(a.x * b, a.y * b, a.z * b);
 
 	@:op(a / b)
@@ -384,11 +384,11 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return new Vec3(a.x / b.x, a.y / b.y, a.z / b.z);
 
 	@:op(a / b)
-	static inline function divScalar(a: Vec3, b: Float): Vec3
+	static inline function divScalar(a: Vec3, b: Single): Vec3
 		return new Vec3(a.x / b, a.y / b, a.z / b);
 	
 	@:op(a / b)
-	static inline function divScalarInv(a: Float, b: Vec3): Vec3
+	static inline function divScalarInv(a: Single, b: Vec3): Vec3
 		return new Vec3(a / b.x, a / b.y, a / b.z);
 
 	@:op(a + b)
@@ -396,7 +396,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return new Vec3(a.x + b.x, a.y + b.y, a.z + b.z);
 
 	@:op(a + b) @:commutative
-	static inline function addScalar(a: Vec3, b: Float): Vec3
+	static inline function addScalar(a: Vec3, b: Single): Vec3
 		return new Vec3(a.x + b, a.y + b, a.z + b);
 
 	@:op(a - b)
@@ -404,11 +404,11 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return new Vec3(a.x - b.x, a.y - b.y, a.z - b.z);
 
 	@:op(a - b)
-	static inline function subScalar(a: Vec3, b: Float): Vec3
+	static inline function subScalar(a: Vec3, b: Single): Vec3
 		return new Vec3(a.x - b, a.y - b, a.z - b);
 
 	@:op(b - a)
-	static inline function subScalarInv(a: Float, b: Vec3): Vec3
+	static inline function subScalarInv(a: Single, b: Vec3): Vec3
 		return new Vec3(a - b.x, a - b.y, a - b.z);
 
 	@:op(a == b)
@@ -427,11 +427,11 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 	}
 
 	@:op(a.b) macro function swizzleWrite(self, name: String, value) {
-		return VectorMath.swizzleWriteExpr(self, name, value);
+		return VectorMath.swizzleWriteExpr(self, name,  value);
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
-	public macro function copyIntoArray(self: haxe.macro.Expr.ExprOf<Vec3>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Float>>, index: haxe.macro.Expr.ExprOf<Int>) {
+	public macro function copyIntoArray(self: haxe.macro.Expr.ExprOf<Vec3>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Single>>, index: haxe.macro.Expr.ExprOf<Int>) {
 		return macro {
 			var self = $self;
 			var array = $array;
@@ -446,14 +446,15 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 }
 
 @:noCompletion
+@:struct
 class Vec3Data {
 	#if !macro
-	public var x: Float;
-	public var y: Float;
-	public var z: Float;
+	public var x: Single;
+	public var y: Single;
+	public var z: Single;
 
-	public inline function new(x: Float, y: Float, z: Float) {
-		// the + 0.0 helps the optimizer realize it can collapse const float operations
+	public inline function new(x: Single, y: Single, z: Single) {
+		// the + 0.0 helps the optimizer realize it can collapse const Single operations
 		this.x = x + 0.0;
 		this.y = y + 0.0;
 		this.z = z + 0.0;
