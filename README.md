@@ -28,7 +28,7 @@ var speed = length(velocity);
 
 Vectors and matrices can be constructed with the same patterns as GLSL
 ```haxe
-// new keyword not required
+// new keyword not required - Creates an object of type Vec2
 vec2(1, 2);
 
 // single argument sets all components
