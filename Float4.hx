@@ -278,7 +278,7 @@ abstract Float4(Float4Data) to Float4Data from Float4Data {
 	public inline function dot(b: Float4): Float {
 		return x * b.x + y * b.y + z * b.z + w * b.w;
 	}
-	public inline function normalize(): Float4 {
+	public inline function normalized(): Float4 {
 		var v: Float4 = this;
 		var lenSq = v.dot(this);
 		var denominator = lenSq == 0.0 ? 1.0 : Math.sqrt(lenSq); // for 0 length, return zero vector rather than infinity

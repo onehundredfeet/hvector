@@ -208,9 +208,9 @@ overload extern inline function dot(v: Float3, b: Float3): Float return v.dot(b)
 overload extern inline function dot(v: Float2, b: Float2): Float return v.dot(b);
 overload extern inline function dot(v: Float, b: Float): Float return (v * b);
 
-overload extern inline function normalize(v: Float4): Float4 return v.normalize();
-overload extern inline function normalize(v: Float3): Float3 return v.normalize();
-overload extern inline function normalize(v: Float2): Float2 return v.normalize();
+overload extern inline function normalize(v: Float4): Float4 return v.normalized();
+overload extern inline function normalize(v: Float3): Float3 return v.normalized();
+overload extern inline function normalize(v: Float2): Float2 return v.normalized();
 overload extern inline function normalize(v: Float) return v <= 0.0 ? 0.0 : 1.0;
 
 overload extern inline function faceforward(v: Float4, I: Float4, Nref: Float4): Float4 return v.faceforward(I, Nref);

@@ -7,8 +7,21 @@ import MathExt;
 
 @:nullSafety
 abstract Float2(Float2Data) to Float2Data from Float2Data {
-
 	#if !macro
+	public inline function new(x: Float, y: Float) {
+		this = new Float2Data(x, y);
+	}
+
+	// I have this sneaking suspicion the compiler will NOT inline these
+	// it's really more than a suspicion
+	public  static final UP : Float2 = new Float2(0.0, 1.0); 
+	public  static final RIGHT : Float2 = new Float2(1.0, 0.0); 
+	public  static final DOWN : Float2 = new Float2(0.0, -1.0); 
+	public  static final LEFT : Float2 = new Float2(-1.0, 0.0); 
+	public  static final ZERO : Float2 = new Float2(0.0, 0.0); 
+	public  static final ONE : Float2 = new Float2(1.0, 1.0); 
+	public  static final POSITIVE_INFINITY : Float2 = new Float2(Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY); 
+
 
 	public var x (get, set): Float;
 	inline function get_x() return this.x;
@@ -17,9 +30,7 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	inline function get_y() return this.y;
 	inline function set_y(v: Float) return this.y = v;
 
-	public inline function new(x: Float, y: Float) {
-		this = new Float2Data(x, y);
-	}
+
 
 	public inline function copyFrom(v: Float2) {
 		x = v.x;
@@ -259,7 +270,7 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	public inline function dot(b: Float2): Float {
 		return x * b.x + y * b.y;
 	}
-	public inline function normalize(): Float2 {
+	public inline function normalized(): Float2 {
 		var v: Float2 = this;
 		var lenSq = v.dot(this);
 		var denominator = lenSq == 0.0 ? 1.0 : Math.sqrt(lenSq); // for 0 length, return zero vector rather than infinity

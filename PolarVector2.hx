@@ -33,22 +33,15 @@ abstract PolarVector2F(Float2)
 
     }
 
-    public inline function toVector(basis : Float2,  clockwise : Bool = false) : Vec2 {
-        var a = (clockwise) ? -this.x : this.x;
-        var cosa = Math.cos(a);
-        var sina = Math.sin(a);
-
-        var x1 = basis.x * cosa - basis.y * sina;
-        var y1 = basis.x * sina + basis.y * cosa;
-
-        return new Vec2( x1 * this.y, y1 * this.y);
+    public inline function toVector(basis : Float2,  clockwise : Bool = false) : Float2 {
+        return angle().toVector( basis, clockwise ) * this.y;
     }
 
     @:op(a * b) @:commutative
 	static inline function mulScalar(a: PolarVector2F, b: Float): PolarVector2F
 		return new PolarVector2F( a.angle(), a.magnitude() * b);
 
-    public inline function angle() return this.x;
+    public inline function angle() : AngleRadF return this.x;
     public inline function magnitude() return this.y;
 }
 /*

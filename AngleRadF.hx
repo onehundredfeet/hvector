@@ -45,9 +45,17 @@ abstract AngleRadF (Float) to Float from Float{
     
     inline public static function bound(x : AngleRadF ) return repeat( x, Math.PI * 2.0);
   
-    public inline function toUpRelativeVector() : Vec2 {
-      return new Vec2(Math.sin(this), Math.cos(this));
-    }
+  
+      public inline function toVector(basis : Float2,  clockwise : Bool = false) : Float2 {
+          var a = (clockwise) ? -this : this;
+          var cosa = Math.cos(a);
+          var sina = Math.sin(a);
+  
+          var x1 = basis.x * cosa - basis.y * sina;
+          var y1 = basis.x * sina + basis.y * cosa;
+  
+          return new Float2( x1, y1 );
+      }
 }
 
 

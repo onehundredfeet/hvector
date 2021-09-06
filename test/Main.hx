@@ -4,6 +4,7 @@ import PolarVector2;
 
 // when comparing floats
 final precision = 1000000;
+final precision_dist = 1;
 
 inline function quatMul(q1: Vec4, q2: Vec4)
 	return vec4(
@@ -683,6 +684,30 @@ function main() {
 	);
 
 	// ------------
+	// # New Stuff
+	// ------------
+
+	test( {
+		var x = new AngleRadF(0);
+		x.toVector(new Float2(0, 1)) == new Float2(0, 1);
+	});
+
+	test( 
+		limitPrecisionCompare(new AngleRadF(Math.PI / 2).toVector(new Float2(0, 1)) , new Float2(-1, 0))
+	);
+	test( 
+		limitPrecisionCompare(new AngleRadF(Math.PI / 2).toVector(new Float2(0, 1), true) , new Float2(1, 0))
+	);
+
+	test({
+		var up = new Float2( 0, 1);
+		var x = new Float2( 0.45, 0.45).normalized();
+			limitPrecisionCompare(
+				up.angle(x).toVector(up),
+				x
+		);});
+
+	// ------------
 	// # Misc
 	// ------------
 
@@ -719,6 +744,10 @@ function main() {
 
 overload extern inline function limitPrecision(x: Float): Float return floor(x * precision) / precision;
 overload extern inline function limitPrecision(x: Vec2): Vec2 return floor(x * precision) / precision;
+overload extern inline function limitPrecisionCompare(a: Float2, b: Float2): Bool {
+	 var v = ShaderMathF.ceil(ShaderMathF.abs(( a - b)) * precision);
+	 return (v.x <= precision_dist && v.y <= precision_dist);
+}
 overload extern inline function limitPrecision(x: Vec3): Vec3 return floor(x * precision) / precision;
 overload extern inline function limitPrecision(x: Vec4): Vec4 return floor(x * precision) / precision;
 overload extern inline function limitPrecision(x: Mat2): Mat2 {

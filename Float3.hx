@@ -259,7 +259,7 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 	public inline function dot(b: Float3): Float {
 		return x * b.x + y * b.y + z * b.z;
 	}
-	public inline function normalize(): Float3 {
+	public inline function normalized(): Float3 {
 		var v: Float3 = this;
 		var lenSq = v.dot(this);
 		var denominator = lenSq == 0.0 ? 1.0 : Math.sqrt(lenSq); // for 0 length, return zero vector rather than infinity
