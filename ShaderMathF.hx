@@ -191,7 +191,19 @@ overload extern inline function smoothstep(edge0: Float, edge1: Float, v: Float)
 	return t * t * (3.0 - 2.0 * t);
 }
 
-// geometric
+overload extern inline function lerp(a: Float4, b: Float4, t: Float): Float4 {
+	return a * (1.0 - t) + b * t;
+}
+overload extern inline function lerp(a: Float3, b: Float3, t: Float): Float3 {
+	return a * (1.0 - t) + b * t;
+}
+overload extern inline function lerp(a: Float2, b: Float2, t: Float): Float2 {
+	return a * (1.0 - t) + b * t;
+}
+
+overload extern inline function lerp(a: Float, b: Float, t: Float): Float {
+	return a * (1.0 - t) + b * t;	
+}
 
 overload extern inline function length(v: Float4): Float return v.length();
 overload extern inline function length(v: Float3): Float return v.length();

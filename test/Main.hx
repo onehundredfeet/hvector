@@ -1,6 +1,7 @@
 import TestFramework;
 import ShaderMath;
 import PolarVector2;
+import Quaternion;
 
 // when comparing floats
 final precision = 1000000;
