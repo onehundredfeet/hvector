@@ -5,12 +5,12 @@ abstract PolarVector2F(Float2)
 //    var _angle : AngleRad;
   //  var _magnitude : Float;
 
-    public inline function new (angle : AngleRadF,  mag : Float)
+    public inline function new (angle : AngleF,  mag : Float)
     {
         this = new Float2( angle, mag );
     }
 
-    public inline function set_angle( angle:AngleRadF ) {
+    public inline function set_angle( angle:AngleF ) {
         this.x = angle;
     }
     public inline function set_magnitude( mag:Float ) {
@@ -41,7 +41,7 @@ abstract PolarVector2F(Float2)
 	static inline function mulScalar(a: PolarVector2F, b: Float): PolarVector2F
 		return new PolarVector2F( a.angle(), a.magnitude() * b);
 
-    public inline function angle() : AngleRadF return this.x;
+    public inline function angle() : AngleF return this.x;
     public inline function magnitude() return this.y;
 }
 /*

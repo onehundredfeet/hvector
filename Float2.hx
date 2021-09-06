@@ -5,6 +5,7 @@ import MathExt;
 //@:eager private typedef Float = Single;
 #end
 
+
 @:nullSafety
 abstract Float2(Float2Data) to Float2Data from Float2Data {
 	#if !macro
@@ -163,7 +164,7 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	
 //	Vector2Ext.Angle(from, to) * MathF.Sign((float) ((double) from.X * (double) to.Y - (double) from.Y * (double) to.X));
 
-	public inline function angleAbs( b : Float2) : AngleRadF
+	public inline function angleAbs( b : Float2) : AngleF
     {
         var num = Math.sqrt( lengthSquared() * b.lengthSquared());
 
@@ -179,7 +180,7 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 			return new Float2(y, x);
 		return new Float2(y, -x);
 	}
-	public inline function angle( b : Float2, clockwise : Bool = false) : AngleRadF {
+	public inline function angle( b : Float2, clockwise : Bool = false) : AngleF {
 		var dir = dot(b.perpendicular(clockwise));
 		var a = angleAbs(b);
 
