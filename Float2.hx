@@ -14,13 +14,13 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 
 	// I have this sneaking suspicion the compiler will NOT inline these
 	// it's really more than a suspicion
-	public  static final UP : Float2 = new Float2(0.0, 1.0); 
-	public  static final RIGHT : Float2 = new Float2(1.0, 0.0); 
-	public  static final DOWN : Float2 = new Float2(0.0, -1.0); 
-	public  static final LEFT : Float2 = new Float2(-1.0, 0.0); 
-	public  static final ZERO : Float2 = new Float2(0.0, 0.0); 
-	public  static final ONE : Float2 = new Float2(1.0, 1.0); 
-	public  static final POSITIVE_INFINITY : Float2 = new Float2(Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY); 
+	public static inline function up() : Float2 return new Float2(0.0, 1.0); 
+	public static inline function down() : Float2 return new Float2(0.0, -1.0); 
+	public static inline function left() : Float2 return new Float2(-1.0, 0.0); 
+	public static inline function right() : Float2 return new Float2(1.0, 0.0); 
+	public static inline function one() : Float2 return new Float2(1.0, 1.0); 
+	public static inline function zero() : Float2 return new Float2(0.0, 0.0); 
+	public static inline function positiveInfinity(): Float2  return new Float2(Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY); 
 
 
 	public var x (get, set): Float;

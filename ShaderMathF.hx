@@ -276,68 +276,68 @@ overload extern inline function cross(a: Float3, b: Float3): Float3 {
 }
 // # Vector Initializers
 
-overload extern inline function Float2(m: Float4x4): Float2 return new Float2(m[0][0], m[0][1]);
-overload extern inline function Float2(m: Float3x3): Float2 return new Float2(m[0][0], m[0][1]);
-overload extern inline function Float2(m: Float2x2): Float2 return new Float2(m[0][0], m[0][1]);
-overload extern inline function Float2(xyzw: Float4): Float2 return new Float2(xyzw.x, xyzw.y);
-overload extern inline function Float2(xyz: Float3): Float2 return new Float2(xyz.x, xyz.y);
-overload extern inline function Float2(xy: Float2): Float2 return new Float2(xy.x, xy.y);
-overload extern inline function Float2(x: Float): Float2 return new Float2(x, x);
-overload extern inline function Float2(x: Float, y: Float): Float2 return new Float2(x, y);
+overload extern inline function float2(m: Float4x4): Float2 return new Float2(m[0][0], m[0][1]);
+overload extern inline function float2(m: Float3x3): Float2 return new Float2(m[0][0], m[0][1]);
+overload extern inline function float2(m: Float2x2): Float2 return new Float2(m[0][0], m[0][1]);
+overload extern inline function float2(xyzw: Float4): Float2 return new Float2(xyzw.x, xyzw.y);
+overload extern inline function float2(xyz: Float3): Float2 return new Float2(xyz.x, xyz.y);
+overload extern inline function float2(xy: Float2): Float2 return new Float2(xy.x, xy.y);
+overload extern inline function float2(x: Float): Float2 return new Float2(x, x);
+overload extern inline function float2(x: Float, y: Float): Float2 return new Float2(x, y);
 
-overload extern inline function Float3(m: Float4x4): Float3 return new Float3(m[0][0], m[0][1], m[0][2]);
-overload extern inline function Float3(m: Float3x3): Float3 return new Float3(m[0][0], m[0][1], m[0][2]);
-overload extern inline function Float3(m: Float2x2): Float3 return new Float3(m[0][0], m[0][1], m[1][0]);
-overload extern inline function Float3(xyzw: Float4): Float3 return new Float3(xyzw.x, xyzw.y, xyzw.z);
-overload extern inline function Float3(xyz: Float3): Float3 return new Float3(xyz.x, xyz.y, xyz.z);
-overload extern inline function Float3(x: Float, yz: Float2): Float3 return new Float3(x, yz.x, yz.y);
-overload extern inline function Float3(xy: Float2, z: Float): Float3 return new Float3(xy.x, xy.y, z);
-overload extern inline function Float3(x: Float): Float3 return new Float3(x, x, x);
-overload extern inline function Float3(x: Float, y: Float, z: Float): Float3 return new Float3(x, y, z);
+overload extern inline function float3(m: Float4x4): Float3 return new Float3(m[0][0], m[0][1], m[0][2]);
+overload extern inline function float3(m: Float3x3): Float3 return new Float3(m[0][0], m[0][1], m[0][2]);
+overload extern inline function float3(m: Float2x2): Float3 return new Float3(m[0][0], m[0][1], m[1][0]);
+overload extern inline function float3(xyzw: Float4): Float3 return new Float3(xyzw.x, xyzw.y, xyzw.z);
+overload extern inline function float3(xyz: Float3): Float3 return new Float3(xyz.x, xyz.y, xyz.z);
+overload extern inline function float3(x: Float, yz: Float2): Float3 return new Float3(x, yz.x, yz.y);
+overload extern inline function float3(xy: Float2, z: Float): Float3 return new Float3(xy.x, xy.y, z);
+overload extern inline function float3(x: Float): Float3 return new Float3(x, x, x);
+overload extern inline function float3(x: Float, y: Float, z: Float): Float3 return new Float3(x, y, z);
 
-overload extern inline function Float4(m: Float4x4): Float4 return new Float4(m[0][0], m[0][1], m[0][2], m[0][3]);
-overload extern inline function Float4(m: Float3x3): Float4 return new Float4(m[0][0], m[0][1], m[0][2], m[1][0]);
-overload extern inline function Float4(m: Float2x2): Float4 return new Float4(m[0][0], m[0][1], m[1][0], m[1][1]);
-overload extern inline function Float4(xyzw: Float4): Float4 return new Float4(xyzw.x, xyzw.y, xyzw.z, xyzw.w);
-overload extern inline function Float4(x: Float, yzw: Float3): Float4 return new Float4(x, yzw.x, yzw.y, yzw.z);
-overload extern inline function Float4(xyz: Float3, w: Float): Float4 return new Float4(xyz.x, xyz.y, xyz.z, w);
-overload extern inline function Float4(xy: Float2, zw: Float2): Float4 return new Float4(xy.x, xy.y, zw.x, zw.y);
-overload extern inline function Float4(x: Float, y: Float, zw: Float2): Float4 return new Float4(x, y, zw.x, zw.y);
-overload extern inline function Float4(x: Float, yz: Float2, w: Float): Float4 return new Float4(x, yz.x, yz.y, w);
-overload extern inline function Float4(xy: Float2, z: Float, w: Float): Float4 return new Float4(xy.x, xy.y, z, w);
-overload extern inline function Float4(x: Float): Float4 return new Float4(x, x, x, x);
-overload extern inline function Float4(x: Float, y: Float, z: Float, w: Float): Float4 return new Float4(x, y, z, w);
+overload extern inline function float4(m: Float4x4): Float4 return new Float4(m[0][0], m[0][1], m[0][2], m[0][3]);
+overload extern inline function float4(m: Float3x3): Float4 return new Float4(m[0][0], m[0][1], m[0][2], m[1][0]);
+overload extern inline function float4(m: Float2x2): Float4 return new Float4(m[0][0], m[0][1], m[1][0], m[1][1]);
+overload extern inline function float4(xyzw: Float4): Float4 return new Float4(xyzw.x, xyzw.y, xyzw.z, xyzw.w);
+overload extern inline function float4(x: Float, yzw: Float3): Float4 return new Float4(x, yzw.x, yzw.y, yzw.z);
+overload extern inline function float4(xyz: Float3, w: Float): Float4 return new Float4(xyz.x, xyz.y, xyz.z, w);
+overload extern inline function float4(xy: Float2, zw: Float2): Float4 return new Float4(xy.x, xy.y, zw.x, zw.y);
+overload extern inline function float4(x: Float, y: Float, zw: Float2): Float4 return new Float4(x, y, zw.x, zw.y);
+overload extern inline function float4(x: Float, yz: Float2, w: Float): Float4 return new Float4(x, yz.x, yz.y, w);
+overload extern inline function float4(xy: Float2, z: Float, w: Float): Float4 return new Float4(xy.x, xy.y, z, w);
+overload extern inline function float4(x: Float): Float4 return new Float4(x, x, x, x);
+overload extern inline function float4(x: Float, y: Float, z: Float, w: Float): Float4 return new Float4(x, y, z, w);
 
-overload extern inline function Float2x2(m: Float4x4): Float2x2 return new Float2x2(m[0][0], m[0][1], m[1][0], m[1][1]);
-overload extern inline function Float2x2(m: Float3x3): Float2x2 return new Float2x2(m[0][0], m[0][1], m[1][0], m[1][1]);
-overload extern inline function Float2x2(m: Float2x2): Float2x2 return m.clone();
-overload extern inline function Float2x2(v: Float4): Float2x2 return new Float2x2(v.x, v.y, v.z, v.w);
-overload extern inline function Float2x2(column0: Float2, column1: Float2): Float2x2 return new Float2x2(column0.x, column0.y, column1.x, column1.y);
-overload extern inline function Float2x2(scale: Float): Float2x2 return new Float2x2(scale, 0.0, 0.0, scale);
-overload extern inline function Float2x2(a00: Float, a01: Float, a10: Float, a11: Float): Float2x2 return new Float2x2(a00, a01, a10, a11);
+overload extern inline function float2x2(m: Float4x4): Float2x2 return new Float2x2(m[0][0], m[0][1], m[1][0], m[1][1]);
+overload extern inline function float2x2(m: Float3x3): Float2x2 return new Float2x2(m[0][0], m[0][1], m[1][0], m[1][1]);
+overload extern inline function float2x2(m: Float2x2): Float2x2 return m.clone();
+overload extern inline function float2x2(v: Float4): Float2x2 return new Float2x2(v.x, v.y, v.z, v.w);
+overload extern inline function float2x2(column0: Float2, column1: Float2): Float2x2 return new Float2x2(column0.x, column0.y, column1.x, column1.y);
+overload extern inline function float2x2(scale: Float): Float2x2 return new Float2x2(scale, 0.0, 0.0, scale);
+overload extern inline function float2x2(a00: Float, a01: Float, a10: Float, a11: Float): Float2x2 return new Float2x2(a00, a01, a10, a11);
 
-overload extern inline function Float3x3(m: Float4x4): Float3x3 return new Float3x3(
+overload extern inline function float3x3(m: Float4x4): Float3x3 return new Float3x3(
 	m[0][0], m[0][1], m[0][2],
 	m[1][0], m[1][1], m[1][2],
 	m[2][0], m[2][1], m[2][2]
 );
-overload extern inline function Float3x3(m: Float3x3): Float3x3 return m.clone();
-overload extern inline function Float3x3(m: Float2x2): Float3x3 return new Float3x3(
+overload extern inline function float3x3(m: Float3x3): Float3x3 return m.clone();
+overload extern inline function float3x3(m: Float2x2): Float3x3 return new Float3x3(
 	m[0][0], m[0][1], 0.0,
 	m[1][0], m[1][1], 0.0,
 	0.0, 0.0, 1.0
 );
-overload extern inline function Float3x3(column0: Float3, column1: Float3, column2: Float3): Float3x3 return new Float3x3(
+overload extern inline function float3x3(column0: Float3, column1: Float3, column2: Float3): Float3x3 return new Float3x3(
 	column0.x, column0.y, column0.z,
 	column1.x, column1.y, column1.z,
 	column2.x, column2.y, column2.z
 );
-overload extern inline function Float3x3(scale: Float): Float3x3 return new Float3x3(
+overload extern inline function float3x3(scale: Float): Float3x3 return new Float3x3(
 	scale, 0.0, 0.0,
 	0.0, scale, 0.0,
 	0.0, 0.0, scale
 );
-overload extern inline function Float3x3(
+overload extern inline function float3x3(
 	a00: Float, a01: Float, a02: Float,
 	a10: Float, a11: Float, a12: Float,
 	a20: Float, a21: Float, a22: Float
@@ -347,32 +347,32 @@ overload extern inline function Float3x3(
 	a20, a21, a22
 );
 
-overload extern inline function Float4x4(m: Float4x4): Float4x4 return m.clone();
-overload extern inline function Float4x4(m: Float3x3): Float4x4 return new Float4x4(
+overload extern inline function float4x4(m: Float4x4): Float4x4 return m.clone();
+overload extern inline function float4x4(m: Float3x3): Float4x4 return new Float4x4(
 	m[0][0], m[0][1], m[0][2], 0.0,
 	m[1][0], m[1][1], m[1][2], 0.0,
 	m[2][0], m[2][1], m[2][2], 0.0,
 	0.0, 0.0, 0.0, 1.0
 );
-overload extern inline function Float4x4(m: Float2x2): Float4x4 return new Float4x4(
+overload extern inline function float4x4(m: Float2x2): Float4x4 return new Float4x4(
 	m[0][0], m[0][1], 0.0, 0.0,
 	m[1][0], m[1][1], 0.0, 0.0,
 	0.0, 0.0, 1.0, 0.0,
 	0.0, 0.0, 0.0, 1.0
 );
-overload extern inline function Float4x4(column0: Float4, column1: Float4, column2: Float4, column3: Float4): Float4x4 return new Float4x4(
+overload extern inline function float4x4(column0: Float4, column1: Float4, column2: Float4, column3: Float4): Float4x4 return new Float4x4(
 	column0.x, column0.y, column0.z, column0.w,
 	column1.x, column1.y, column1.z, column1.w,
 	column2.x, column2.y, column2.z, column2.w,
 	column3.x, column3.y, column3.z, column3.w
 );
-overload extern inline function Float4x4(scale: Float): Float4x4 return new Float4x4(
+overload extern inline function float4x4(scale: Float): Float4x4 return new Float4x4(
 	scale, 0.0, 0.0, 0.0,
 	0.0, scale, 0.0, 0.0,
 	0.0, 0.0, scale, 0.0,
 	0.0, 0.0, 0.0, scale
 );
-overload extern inline function Float4x4(
+overload extern inline function float4x4(
 	a00: Float, a01: Float, a02: Float, a03: Float,
 	a10: Float, a11: Float, a12: Float, a13: Float,
 	a20: Float, a21: Float, a22: Float, a23: Float,
