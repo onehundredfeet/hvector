@@ -1,3 +1,5 @@
+import MathExt;
+
 #if (vector_math_f32 && (cpp || hl || cs || java))
 // override Float (usually f64) type with f32
 //@:eager private typedef Float = Single;
@@ -145,6 +147,36 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 			Math.ceil(y)
 		);
 	}
+
+//	public static float SignedAngle(this Vector2f from, Vector2f to) => 
+	
+//	Vector2Ext.Angle(from, to) * MathF.Sign((float) ((double) from.X * (double) to.Y - (double) from.Y * (double) to.X));
+
+	public inline function angleAbs( b : Float2) : AngleRadF
+    {
+        var num = Math.sqrt( lengthSquared() * b.lengthSquared());
+
+		var x = dot( b ) / num;
+		var y = MathExt.clamp(x, -1., 1.);
+
+        return (num < 1.0000000036274937E-15) ? 0.0 : Math.acos( y );
+    }
+
+
+	public inline function perpendicular(clockwise : Bool = true ) : Float2 {
+		if (clockwise) 
+			return new Float2(y, x);
+		return new Float2(y, -x);
+	}
+	public inline function angle( b : Float2, clockwise : Bool = false) : AngleRadF {
+		var dir = dot(b.perpendicular(clockwise));
+		var a = angleAbs(b);
+
+		var invert = dir < -0.0 ? -1.0 : 1.0;
+
+		return (a * invert).positive();
+	}
+
 	public inline function fract(): Float2 {
 		return (this: Float2) - floor();
 	}
@@ -218,6 +250,9 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	public inline function length(): Float {
 		return Math.sqrt(x*x + y*y);
 	}	
+	public inline function lengthSquared(): Float {
+		return x*x + y*y;
+	}
 	public inline function distance(b: Float2): Float {
 		return (b - this).length();
 	}

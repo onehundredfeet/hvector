@@ -6,7 +6,7 @@
 	Reference Spec GLSL ES 1.0: https://www.khronos.org/files/opengles_shading_language.pdf
 
 	**Usage**:
-	Add `import HVector;` to be able to use GLSL functions and constructors
+	Add `import ShaderMath;` to be able to use GLSL functions and constructors
 
 	@license MIT
 	@author haxiomic (George Corney)
