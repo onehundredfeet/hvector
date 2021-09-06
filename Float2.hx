@@ -106,8 +106,8 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	}
 	public inline function log2(): Float2 @:privateAccess {
 		return new Float2(
-			VectorMath.log2f(x),
-			VectorMath.log2f(y)
+			ShaderMath.log2f(x),
+			ShaderMath.log2f(y)
 		);
 	}
 	public inline function sqrt(): Float2 {
@@ -386,11 +386,11 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 
 	// macros
 	@:op(a.b) macro function swizzleRead(self, name: String) {
-		return VectorMathF.swizzleReadExprF(self, name);
+		return ShaderMathF.swizzleReadExprF(self, name);
 	}
 
 	@:op(a.b) macro function swizzleWrite(self, name: String, value) {
-		return VectorMathF.swizzleWriteExprF(self, name, value);
+		return ShaderMathF.swizzleWriteExprF(self, name, value);
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})

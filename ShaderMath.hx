@@ -6,12 +6,11 @@
 	Reference Spec GLSL ES 1.0: https://www.khronos.org/files/opengles_shading_language.pdf
 
 	**Usage**:
-	Add `import VectorMath;` to be able to use GLSL functions and constructors
-
-	Pass `-D vector_math_f32` to use 32-bit Singles on platforms that support it (by default haxe's Single type corresponds to a 64-bit Single)
+	Add `import HVector;` to be able to use GLSL functions and constructors
 
 	@license MIT
 	@author haxiomic (George Corney)
+	@author onehundredfeet (Ryan Cleven)
 **/
 
 // # Built-in Functions

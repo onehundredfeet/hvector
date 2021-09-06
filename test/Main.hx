@@ -1,5 +1,5 @@
 import TestFramework;
-import VectorMath;
+import ShaderMath;
 
 // when comparing floats
 final precision = 1000000;

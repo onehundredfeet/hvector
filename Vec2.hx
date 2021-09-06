@@ -106,8 +106,8 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	}
 	public inline function log2(): Vec2 @:privateAccess {
 		return new Vec2(
-			VectorMath.log2f(x),
-			VectorMath.log2f(y)
+			ShaderMath.log2f(x),
+			ShaderMath.log2f(y)
 		);
 	}
 	public inline function sqrt(): Vec2 {
@@ -386,11 +386,11 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 
 	// macros
 	@:op(a.b) macro function swizzleRead(self, name: String) {
-		return VectorMath.swizzleReadExpr(self, name);
+		return ShaderMath.swizzleReadExpr(self, name);
 	}
 
 	@:op(a.b) macro function swizzleWrite(self, name: String, value) {
-		return VectorMath.swizzleWriteExpr(self, name,  value);
+		return ShaderMath.swizzleWriteExpr(self, name,  value);
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})

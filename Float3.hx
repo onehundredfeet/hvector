@@ -129,9 +129,9 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 	}
 	public inline function log2(): Float3 @:privateAccess {
 		return new Float3(
-			VectorMath.log2f(x),
-			VectorMath.log2f(y),
-			VectorMath.log2f(z)
+			ShaderMath.log2f(x),
+			ShaderMath.log2f(y),
+			ShaderMath.log2f(z)
 		);
 	}
 	public inline function sqrt(): Float3 {
@@ -423,11 +423,11 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 
 	// macros
 	@:op(a.b) macro function swizzleRead(self, name: String) {
-		return VectorMathF.swizzleReadExprF(self, name);
+		return ShaderMathF.swizzleReadExprF(self, name);
 	}
 
 	@:op(a.b) macro function swizzleWrite(self, name: String, value) {
-		return VectorMathF.swizzleWriteExprF(self, name, value);
+		return ShaderMathF.swizzleWriteExprF(self, name, value);
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
