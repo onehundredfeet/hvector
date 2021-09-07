@@ -2,9 +2,6 @@ import Float2;
 
 abstract PolarVector2F(Float2)
 {
-//    var _angle : AngleRad;
-  //  var _magnitude : Float;
-
     public inline function new (angle : AngleF,  mag : Float)
     {
         this = new Float2( angle, mag );
@@ -44,50 +41,4 @@ abstract PolarVector2F(Float2)
     public inline function angle() : AngleF return this.x;
     public inline function magnitude() return this.y;
 }
-/*
-    public inline function tounitvector() : Vec2 {
-        
-    }
 
-
-    public float Angle
-    {
-        get => _angle;
-        set
-        {
-            _angle = value;
-            _unit = _angle.AsUnitRotation();
-            _vector = _unit * _magnitude;
-        }
-    }
-
-    public float Magnitude
-    {
-        get => _magnitude;
-        set
-        {
-            _magnitude = value;
-            _vector = _unit * _magnitude;
-        }
-    }
-
-    public (float, float) Polar
-    {
-        get { return (_angle, _magnitude); }
-        set
-        {
-            (_angle, _magnitude) = value;
-            _unit = _angle.AsUnitRotation();
-            _vector = _unit * _magnitude;
-        }
-    }
-
-    //public static implicit operator PolarVector2(Vector2f v) => new PolarVector2(v);
-    //public static implicit operator Vector2f(PolarVector2 v) => v.Vector;
-    
-    private Vector2f _vector;
-    private Vector2f _unit;
-    private float _angle;
-    private float _magnitude;
-}
-}*/
