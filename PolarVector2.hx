@@ -30,7 +30,11 @@ abstract PolarVector2F(Float2)
 
     }
 
-    public inline function toVector(basis : Float2,  clockwise : Bool = false) : Float2 {
+    public inline function toVectorUp(clockwise : Bool = false) : Float2 {
+        return angle().toVector( Float2.up(), clockwise ) * this.y;
+    }
+
+    public inline function toVector(basis : Float2 ,  clockwise : Bool = false) : Float2 {
         return angle().toVector( basis, clockwise ) * this.y;
     }
 

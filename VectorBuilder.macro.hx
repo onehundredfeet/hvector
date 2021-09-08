@@ -61,7 +61,7 @@ import tink.macro.Functions;
         ret: null, // ret = return type
         args:args // vector4 incoming
       }
-      Exprs.log(myFastSetFunc.expr);
+      //Exprs.log(myFastSetFunc.expr);
 
       return myFastSetFunc;
     }
