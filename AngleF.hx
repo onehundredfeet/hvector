@@ -5,7 +5,19 @@ inline function angleFromRad( x : Float ) : AngleF {
 }
 
 inline function angleFromDeg( x : Float ) : AngleF {
-  return new AngleF(x * (180.0 / Math.PI));
+  return new AngleF(x * ( Math.PI / 180.0));
+}
+
+inline function angleAbsBetweenVectors( a : Float2, b : Float2 ) {
+    return a.angleAbs(b);
+}
+
+inline function angleBetweenVectors( a : Float2, b : Float2 ) {
+  return a.angle(b);
+}
+
+inline function fromUp( a : Float2 ) {
+  return Float2.up().angle(a);
 }
 
 abstract AngleF (Float) to Float from Float{
@@ -14,10 +26,13 @@ abstract AngleF (Float) to Float from Float{
       }
 
     @:from
-    static public function fromString(r:Single) {
+    static public inline function fromSingle(r:Single) {
       return new AngleF(r);
     }
     
+    static public inline function fromDeg( x : Float ) {
+      return new AngleF(x * ( Math.PI / 180.0));
+    }
     @:to
     inline public function toFloat() : Float {
       return this;
@@ -29,6 +44,21 @@ abstract AngleF (Float) to Float from Float{
       var x = repeat(this, Math.PI * 2.0);
       return ( x > Math.PI) ? Math.PI * 2.0 - x : x ;
     }
+
+    inline public function relativerad() : Float {
+      var x = repeat(this, Math.PI * 2.0);
+      return ( x > Math.PI) ? x - Math.PI * 2.0  : x ;
+    }
+
+    
+    inline function rad2deg( x : Float ) {
+      return x  * (180.0 / Math.PI);
+    }
+    inline public function magnitudedeg() : Float {
+      var x = repeat(this, Math.PI * 2.0);
+      return rad2deg(( x > Math.PI) ? (Math.PI * 2.) - x : x );
+    }
+
     inline public function direction() : Float {
       var x = repeat(this, Math.PI * 2.0);
       return ( x > Math.PI) ? -1. : 1. ;

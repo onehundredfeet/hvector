@@ -461,3 +461,20 @@ class Vec3Data {
 	}
 	#end
 }
+
+#if hl
+abstract NativeArrayVec3( hl.NativeArray<Single>) to hl.NativeArray<Single> from  hl.NativeArray<Single> {
+	@:arrayAccess
+	public inline function get(idx: Int) {
+		return new Vec3(this[idx * 3 + 0],this[idx * 3 + 1],this[idx * 3 + 2]);
+	}
+
+	@:arrayAccess
+	public inline function set(idx:Int, v:Vec3):Vec3 {
+		this[idx * 3 + 0] = v.x;
+		this[idx * 3 + 1] = v.y;
+		this[idx * 3 + 2] = v.z;
+		return v;
+	}
+}
+#end

@@ -8,6 +8,15 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 
 	#if !macro
 
+	public static inline function up() : Float3 return new Float3(0.0, 0.0, 1.0); 
+	public static inline function down() : Float3 return new Float3(0.0, 0.0, -1.0); 
+	public static inline function left() : Float3 return new Float3(-1.0, 0.0, 0.0); 
+	public static inline function right() : Float3 return new Float3(1.0, 0.0, 0.0); 
+	public static inline function one() : Float3 return new Float3(1.0, 1.0, 1.); 
+	public static inline function zero() : Float3 return new Float3(0.0, 0.0, 0.); 
+	public static inline function positiveInfinity(): Float3  return new Float3(Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY); 
+
+
 	public var x (get, set): Float;
 	inline function get_x() return this.x;
 	inline function set_x(v: Float) return this.x = v;
@@ -461,3 +470,14 @@ class Float3Data {
 	}
 	#end
 }
+
+#if hl
+abstract NativeArrayFloat3(hl.NativeArray<Float>) to hl.NativeArray<Float> from hl.NativeArray<Float> {
+	@:arrayAccess
+	public inline function get(idx: Int) {
+		return new Float3(this[idx * 3 + 0],this[idx * 3 + 0],this[idx * 3 + 0]);
+	}
+
+
+}
+#end
