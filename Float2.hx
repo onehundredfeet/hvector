@@ -454,8 +454,8 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	
 }
 
-//@:noCompletion
-//@:struct
+@:noCompletion
+@:struct
 class Float2Data {
 	#if !macro
 	public var x: Float;
