@@ -1,4 +1,4 @@
-import Float2;
+package hvector;
 
 abstract PolarVector2F(Float2)
 {

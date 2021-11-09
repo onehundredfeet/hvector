@@ -1,5 +1,5 @@
 
-
+package hvector;
 #if hl
 abstract Vec2Array(hl.NativeArray<Single>)  from hl.NativeArray<Single> to hl.NativeArray<Single>  {
 

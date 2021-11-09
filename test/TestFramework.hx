@@ -2,6 +2,8 @@
 	TestFramework
 **/
 
+import hvector.*;
+
 #if !macro
 
 var _incrementingNumber: Int = 12;

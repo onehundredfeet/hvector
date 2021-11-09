@@ -1,4 +1,6 @@
-import MathExt;
+package hvector;
+
+import hvector.MathExt;
 
 inline function angleFromRad( x : Float ) : AngleF {
   return new AngleF(x);

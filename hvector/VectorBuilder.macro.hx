@@ -1,3 +1,5 @@
+package hvector;
+
 import tink.macro.Types;
 import tink.MacroApi.ClassBuilder;
 import tink.macro.Exprs;
@@ -7,8 +9,11 @@ import haxe.macro.Context;
 import tink.macro.Functions;
 
 
+  final VECF_NAME = "hvector.Float";
+  final VEC_NAME = "hvector.Vec";
+
     private function MakeReturnStatement(name : String, double : Bool, depth : Int ):Expr {
-      var tname = (double ?  "Float" : "Vec") + depth;
+      var tname = (double ?  VECF_NAME : VEC_NAME) + depth;
       var tthis = macro $i{"this"};
       var aa : Array<Expr> = [ Exprs.field(tthis, name + "_x"), Exprs.field(tthis, name + "_y") ];
       if (depth >= 3) aa.push(Exprs.field(tthis, name + "_z"));
@@ -19,7 +24,7 @@ import tink.macro.Functions;
       return macro return new $tp( $a{aa});
     }
     private function MakeGetFunction(name : String, double : Bool, depth : Int) : Function{
-      var tname = (double ?  "Float" : "Vec") + depth;
+      var tname = (double ?  VECF_NAME :VEC_NAME) + depth;
 
       var myFunc:Function = { 
         expr: MakeReturnStatement(name, double, depth),
@@ -31,7 +36,7 @@ import tink.macro.Functions;
     }
 
     private function MakeSetFunction(name : String, double : Bool, depth : Int, addReturn : Bool) : Function{
-      var tname = (double ?  "Float" : "Vec") + depth;
+      var tname = (double ?  VECF_NAME : VEC_NAME) + depth;
       var tthis = macro $i{"this"};
       var vname = macro $i{"v"};
 

@@ -1,3 +1,4 @@
+package hvector;
 #if (vector_math_f32 && (cpp || hl || cs || java))
 // override Float (usually f64) type with f32
 //@:eager private typedef Float = Single;

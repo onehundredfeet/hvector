@@ -1,3 +1,4 @@
+package hvector;
 /**
 	# Vector Mathematics Library
 

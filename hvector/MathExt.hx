@@ -1,3 +1,4 @@
+package hvector;
 #if  (cpp || hl || cs || java)
 
 overload extern inline function repeat( t : Single, length : Single) : Single {

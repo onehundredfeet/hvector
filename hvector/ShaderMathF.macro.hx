@@ -1,3 +1,5 @@
+package hvector;
+
 /**
 	Macros required by VectorMath
 	we use exceptions rather than Context.error for compile-time performance; it saves parsing and typing all the types included when using Context

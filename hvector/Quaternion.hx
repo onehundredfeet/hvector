@@ -1,5 +1,5 @@
-import Float4;
-import Float3x3;
+package hvector;
+
 /*
 The MIT License (MIT)
 
