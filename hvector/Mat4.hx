@@ -438,28 +438,29 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	static inline function notEqual(m: Mat4, n: Mat4): Bool
 		return !equal(m, n);
 
+
+
 	public static function trs( t : Vec3, r : Quaternion, s : Vec3 ) : Mat4 {
-		//May be transposed
-		//May have quaternion in the wrong order
 				return new Mat4(
-				(1.0-2.0*(r.y*r.y+r.z*r.z))*s.x,
-				(r.x*r.y+r.z*r.w)*s.x*2.0,
-				(r.x*r.z-r.y*r.w)*s.x*2.0,
-				0.0,
-		
-				(r.x*r.y-r.z*r.w)*s.y*2.0,
-				(1.0-2.0*(r.x*r.x+r.z*r.z))*s.y,
-				(r.y*r.z+r.x*r.w)*s.y*2.0,
-				0.0,
-		
-				(r.x*r.z+r.y*r.w)*s.z*2.0,
-				(r.y*r.z-r.x*r.w)*s.z*2.0,
-				(1.0-2.0*(r.x*r.x+r.y*r.y))*s.z,
-				0.0,
-		
+				(1.0-2.0*(r.y*r.y+r.z*r.z))*s.x, //0,0
+				(r.x*r.y-r.z*r.w)*s.y*2.0,		//correct
+				(r.x*r.z+r.y*r.w)*s.z*2.0, //correct
 				t.x,
+		
+				(r.x*r.y+r.z*r.w)*s.x*2.0,  // correct
+				(1.0-2.0*(r.x*r.x+r.z*r.z))*s.y, //1,1
+				(r.y*r.z-r.x*r.w)*s.z*2.0, // correct
 				t.y,
+		
+				(r.x*r.z-r.y*r.w)*s.x*2.0, // correct
+				(r.y*r.z+r.x*r.w)*s.y*2.0, // correct
+				(1.0-2.0*(r.x*r.x+r.y*r.y))*s.z, // 2,2
 				t.z,
+		
+				//may be transposed translation?
+				0.0,
+				0.0,
+				0.0,
 				1.0
 				);
 			}
