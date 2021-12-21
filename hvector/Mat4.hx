@@ -463,7 +463,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 				1.0
 				);
 			}
-			
+
 	#end // !macro
 
 	/**
@@ -483,13 +483,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		}
 	}
 
-	/*
-static inline void mat4_trs(struct Mat4 *res, struct V3 t, struct Quat r, struct V3 s)
-{
 
-}
-	*/
-	
 
 }
 
