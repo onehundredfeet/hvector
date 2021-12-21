@@ -1,5 +1,7 @@
 package hvector;
 
+import hvector.Float4;
+
 /*
 The MIT License (MIT)
 
@@ -19,6 +21,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 @:forward(w, x, y, z)
 abstract Quaternion(Float4Data) from Float4Data to Float4Data
 {
+    #if !macro
     // The number of elements in this structure
     public static inline var elementCount:Int = 4;
     
@@ -611,4 +614,5 @@ abstract Quaternion(Float4Data) from Float4Data to Float4Data
         var self:Quaternion = this;
         return (1.0 / self.length) * self;
     }
+    #end
 }

@@ -8,6 +8,13 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 
 	#if !macro
 
+	public static final identity = new Mat4(
+		1.0, 0., 0., 0.,
+		0.0, 1., 0., 0.,
+		0.0, 0., 1., 0.,
+		0.0, 0., 0., 1.
+		);
+
 	public inline function new(
 		a00: Single, a01: Single, a02: Single, a03: Single,
 		a10: Single, a11: Single, a12: Single, a13: Single,
@@ -350,6 +357,25 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	}
 
 	@:op(a * b)
+	static inline function postMulPos3(m: Mat4, v: Vec3): Vec3 {
+		var m: Mat4Data = m;
+		return new Vec3(
+			m.c0.x * v.x + m.c1.x * v.y + m.c2.x * v.z + m.c3.x,
+			m.c0.y * v.x + m.c1.y * v.y + m.c2.y * v.z + m.c3.y,
+			m.c0.z * v.x + m.c1.z * v.y + m.c2.z * v.z + m.c3.z
+		);
+	}
+
+	inline function postMulVec3(m: Mat4, v: Vec3): Vec3 {
+		var m: Mat4Data = m;
+		return new Vec3(
+			m.c0.x * v.x + m.c1.x * v.y + m.c2.x * v.z,
+			m.c0.y * v.x + m.c1.y * v.y + m.c2.y * v.z,
+			m.c0.z * v.x + m.c1.z * v.y + m.c2.z * v.z 
+		);
+	}
+
+	@:op(a * b)
 	static inline function preMulVec4(v: Vec4, m: Mat4): Vec4 {
 		var m: Mat4Data = m;
 		return new Vec4(
@@ -412,6 +438,32 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	static inline function notEqual(m: Mat4, n: Mat4): Bool
 		return !equal(m, n);
 
+	public static function trs( t : Vec3, r : Quaternion, s : Vec3 ) : Mat4 {
+		//May be transposed
+		//May have quaternion in the wrong order
+				return new Mat4(
+				(1.0-2.0*(r.y*r.y+r.z*r.z))*s.x,
+				(r.x*r.y+r.z*r.w)*s.x*2.0,
+				(r.x*r.z-r.y*r.w)*s.x*2.0,
+				0.0,
+		
+				(r.x*r.y-r.z*r.w)*s.y*2.0,
+				(1.0-2.0*(r.x*r.x+r.z*r.z))*s.y,
+				(r.y*r.z+r.x*r.w)*s.y*2.0,
+				0.0,
+		
+				(r.x*r.z+r.y*r.w)*s.z*2.0,
+				(r.y*r.z-r.x*r.w)*s.z*2.0,
+				(1.0-2.0*(r.x*r.x+r.y*r.y))*s.z,
+				0.0,
+		
+				t.x,
+				t.y,
+				t.z,
+				1.0
+				);
+			}
+			
 	#end // !macro
 
 	/**
@@ -430,6 +482,14 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 			array;
 		}
 	}
+
+	/*
+static inline void mat4_trs(struct Mat4 *res, struct V3 t, struct Quat r, struct V3 s)
+{
+
+}
+	*/
+	
 
 }
 

@@ -9,6 +9,15 @@ abstract Vec4(Vec4Data) to Vec4Data from Vec4Data {
 
 	#if !macro
 
+	public static inline function up() : Vec4 return new Vec4(0.0, 0.0, 1.0, 0.); 
+	public static inline function down() : Vec4 return new Vec4(0.0, 0.0, -1.0, 0.); 
+	public static inline function left() : Vec4 return new Vec4(-1.0, 0.0, 0.0, 0.); 
+	public static inline function right() : Vec4 return new Vec4(1.0, 0.0, 0.0, 0.); 
+	public static inline function one() : Vec4 return new Vec4(1.0, 1.0, 1., 1.); 
+	public static inline function zero() : Vec4 return new Vec4(0.0, 0.0, 0., 0.); 
+	public static inline function positiveInfinity(): Vec4  return new Vec4(Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY); 
+
+
 	public var x (get, set): Single;
 	inline function get_x() return this.x;
 	inline function set_x(v: Single) return this.x = v;
