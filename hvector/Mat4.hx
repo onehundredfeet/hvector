@@ -386,6 +386,16 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		);
 	}
 
+	@:op(a * b)
+	static inline function preMulPos3(v: Vec3, m: Mat4): Vec3 {
+		var m: Mat4Data = m;
+		return new Vec3(
+			m.c0.x * v.x + m.c0.y * v.y + m.c0.z * v.z + m.c0.w,
+			m.c1.x * v.x + m.c1.y * v.y + m.c1.z * v.z + m.c1.w,
+			m.c2.x * v.x + m.c2.y * v.y + m.c2.z * v.z + m.c2.w
+		);
+	}
+
 	@:op(a * b) @:commutative
 	static inline function mulScalar(m: Mat4, f: Single): Mat4 {
 		var m: Mat4Data = m;
@@ -445,22 +455,22 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 				(1.0-2.0*(r.y*r.y+r.z*r.z))*s.x, //0,0
 				(r.x*r.y-r.z*r.w)*s.y*2.0,		//correct
 				(r.x*r.z+r.y*r.w)*s.z*2.0, //correct
-				t.x,
+				0.,
 		
 				(r.x*r.y+r.z*r.w)*s.x*2.0,  // correct
 				(1.0-2.0*(r.x*r.x+r.z*r.z))*s.y, //1,1
 				(r.y*r.z-r.x*r.w)*s.z*2.0, // correct
-				t.y,
+				0.,
 		
 				(r.x*r.z-r.y*r.w)*s.x*2.0, // correct
 				(r.y*r.z+r.x*r.w)*s.y*2.0, // correct
 				(1.0-2.0*(r.x*r.x+r.y*r.y))*s.z, // 2,2
-				t.z,
+				0.,
 		
 				//may be transposed translation?
-				0.0,
-				0.0,
-				0.0,
+				t.x,
+				t.y,
+				t.z,
 				1.0
 				);
 			}
@@ -488,6 +498,7 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 
 }
 
+// Stored in column major
 @:noCompletion
 class Mat4Data {
 	#if !macro
