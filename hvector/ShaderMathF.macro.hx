@@ -24,17 +24,17 @@ function swizzleReadExprF(self: haxe.macro.Expr, name: String) {
 		case 2:
 			macro {
 				var self = $self;
-				new Vec2(self.$f0, self.$f1);
+				new Float2(self.$f0, self.$f1);
 			}
 		case 3:
 			macro {
 				var self = $self;
-				new Vec3(self.$f0, self.$f1, self.$f2);
+				new Float3(self.$f0, self.$f1, self.$f2);
 			}
 		case 4:
 			macro {
 				var self = $self;
-				new Vec4(self.$f0, self.$f1, self.$f2, self.$f3);
+				new Float4(self.$f0, self.$f1, self.$f2, self.$f3);
 			}
 		default:
 			throw 'Unsupported swizzle read ".$name"';
@@ -61,7 +61,7 @@ function swizzleWriteExprF(self: haxe.macro.Expr, name: String, value) {
 
 			macro {
 				var self = $self;
-				var value: Vec2 = $value;
+				var value: Float2 = $value;
 				self.$f0 = value.x;
 				self.$f1 = value.y;
 				value;
@@ -75,7 +75,7 @@ function swizzleWriteExprF(self: haxe.macro.Expr, name: String, value) {
 			}
 			macro {
 				var self = $self;
-				var value: Vec3 = $value;
+				var value: Float3 = $value;
 				self.$f0 = value.x;
 				self.$f1 = value.y;
 				self.$f2 = value.z;
@@ -91,7 +91,7 @@ function swizzleWriteExprF(self: haxe.macro.Expr, name: String, value) {
 			}
 			macro {
 				var self = $self;
-				var value: Vec4 = $value;
+				var value: Float4 = $value;
 				self.$f0 = value.x;
 				self.$f1 = value.y;
 				self.$f2 = value.z;
