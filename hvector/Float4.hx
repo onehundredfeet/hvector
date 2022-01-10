@@ -40,10 +40,10 @@ abstract Float4(Float4Data) to Float4Data from Float4Data {
 
 	// Trigonometric
 	public inline function radians(): Float4 {
-		return (this: Float4) * Math.PI / 180;
+		return (this: Float4) * Constants.PI / 180;
 	}
 	public inline function degrees(): Float4 {
-		return (this: Float4) * 180 / Math.PI;
+		return (this: Float4) * 180 / Constants.PI;
 	}
 	public inline function sin(): Float4 {
 		return new Float4(

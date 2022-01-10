@@ -26,12 +26,12 @@ package hvector;
 overload extern inline function radians(degrees: Float4): Float4 return degrees.radians();
 overload extern inline function radians(degrees: Float3): Float3 return degrees.radians();
 overload extern inline function radians(degrees: Float2): Float2 return degrees.radians();
-overload extern inline function radians(degrees: Float): Float return degrees * Math.PI / 180;
+overload extern inline function radians(degrees: Float): Float return degrees * Constants.PI / 180;
 
 overload extern inline function degrees(radians: Float4): Float4 return radians.degrees();
 overload extern inline function degrees(radians: Float3): Float3 return radians.degrees();
 overload extern inline function degrees(radians: Float2): Float2 return radians.degrees();
-overload extern inline function degrees(radians: Float): Float return radians * 180 / Math.PI;
+overload extern inline function degrees(radians: Float): Float return radians * 180 / Constants.PI;
 
 overload extern inline function sin(v: Float4): Float4 return v.sin();
 overload extern inline function sin(v: Float3): Float3 return v.sin();

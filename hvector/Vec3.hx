@@ -44,10 +44,10 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 
 	// Trigonometric
 	public inline function radians(): Vec3 {
-		return (this: Vec3) * Math.PI / 180;
+		return (this: Vec3) * Constants.PI / 180;
 	}
 	public inline function degrees(): Vec3 {
-		return (this: Vec3) * 180 / Math.PI;
+		return (this: Vec3) * 180 / Constants.PI;
 	}
 	public inline function sin(): Vec3 {
 		return new Vec3(

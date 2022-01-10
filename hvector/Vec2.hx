@@ -33,10 +33,10 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 
 	// Trigonometric
 	public inline function radians(): Vec2 {
-		return (this: Vec2) * Math.PI / 180;
+		return (this: Vec2) * Constants.PI / 180;
 	}
 	public inline function degrees(): Vec2 {
-		return (this: Vec2) * 180 / Math.PI;
+		return (this: Vec2) * 180 / Constants.PI;
 	}
 	public inline function sin(): Vec2 {
 		return new Vec2(

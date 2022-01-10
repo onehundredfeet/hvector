@@ -49,10 +49,10 @@ abstract Vec4(Vec4Data) to Vec4Data from Vec4Data {
 
 	// Trigonometric
 	public inline function radians(): Vec4 {
-		return (this: Vec4) * Math.PI / 180;
+		return (this: Vec4) * Constants.PI / 180;
 	}
 	public inline function degrees(): Vec4 {
-		return (this: Vec4) * 180 / Math.PI;
+		return (this: Vec4) * 180 / Constants.PI;
 	}
 	public inline function sin(): Vec4 {
 		return new Vec4(

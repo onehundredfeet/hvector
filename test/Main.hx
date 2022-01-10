@@ -694,10 +694,10 @@ function main() {
 	});
 
 	test( 
-		limitPrecisionCompare(new AngleF(Math.PI / 2).toVector(new Float2(0, 1)) , new Float2(-1, 0))
+		limitPrecisionCompare(new AngleF(Constants.PI / 2).toVector(new Float2(0, 1)) , new Float2(-1, 0))
 	);
 	test( 
-		limitPrecisionCompare(new AngleF(Math.PI / 2).toVector(new Float2(0, 1), true) , new Float2(1, 0))
+		limitPrecisionCompare(new AngleF(Constants.PI / 2).toVector(new Float2(0, 1), true) , new Float2(1, 0))
 	);
 
 	test({

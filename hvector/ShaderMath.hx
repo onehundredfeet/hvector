@@ -26,12 +26,12 @@ package hvector;
 overload extern inline function radians(degrees: Vec4): Vec4 return degrees.radians();
 overload extern inline function radians(degrees: Vec3): Vec3 return degrees.radians();
 overload extern inline function radians(degrees: Vec2): Vec2 return degrees.radians();
-overload extern inline function radians(degrees: Single): Single return degrees * Math.PI / 180;
+overload extern inline function radians(degrees: Single): Single return degrees * Constants.PI / 180;
 
 overload extern inline function degrees(radians: Vec4): Vec4 return radians.degrees();
 overload extern inline function degrees(radians: Vec3): Vec3 return radians.degrees();
 overload extern inline function degrees(radians: Vec2): Vec2 return radians.degrees();
-overload extern inline function degrees(radians: Single): Single return radians * 180 / Math.PI;
+overload extern inline function degrees(radians: Single): Single return radians * 180 / Constants.PI;
 
 overload extern inline function sin(v: Vec4): Vec4 return v.sin();
 overload extern inline function sin(v: Vec3): Vec3 return v.sin();
@@ -146,7 +146,7 @@ overload extern inline function min(v: Vec3, b: Single): Vec3 return v.min(b);
 overload extern inline function min(v: Vec3, b: Vec3): Vec3 return v.min(b);
 overload extern inline function min(v: Vec2, b: Single): Vec2 return v.min(b);
 overload extern inline function min(v: Vec2, b: Vec2): Vec2 return v.min(b);
-overload extern inline function min(v: Single, b: Single): Single return Math.min(v, b);
+overload extern inline function min(v: Single, b: Single): Single return MathExt.min(v, b);
 
 overload extern inline function max(v: Vec4, b: Single): Vec4 return v.max(b);
 overload extern inline function max(v: Vec4, b: Vec4): Vec4 return v.max(b);
@@ -154,7 +154,7 @@ overload extern inline function max(v: Vec3, b: Single): Vec3 return v.max(b);
 overload extern inline function max(v: Vec3, b: Vec3): Vec3 return v.max(b);
 overload extern inline function max(v: Vec2, b: Single): Vec2 return v.max(b);
 overload extern inline function max(v: Vec2, b: Vec2): Vec2 return v.max(b);
-overload extern inline function max(v: Single, b: Single): Single return Math.max(v, b);
+overload extern inline function max(v: Single, b: Single): Single return MathExt.max(v, b);
 
 overload extern inline function clamp(v: Vec4, min: Single, max: Single): Vec4 return v.clamp(min, max);
 overload extern inline function clamp(v: Vec4, min: Vec4, max: Vec4): Vec4 return v.clamp(min, max);

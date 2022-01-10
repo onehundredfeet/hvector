@@ -46,10 +46,10 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 
 	// Trigonometric
 	public inline function radians(): Float2 {
-		return (this: Float2) * Math.PI / 180;
+		return (this: Float2) * Constants.PI / 180;
 	}
 	public inline function degrees(): Float2 {
-		return (this: Float2) * 180 / Math.PI;
+		return (this: Float2) * 180 / Constants.PI;
 	}
 	public inline function sin(): Float2 {
 		return new Float2(

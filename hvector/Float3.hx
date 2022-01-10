@@ -53,10 +53,10 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 
 	// Trigonometric
 	public inline function radians(): Float3 {
-		return (this: Float3) * Math.PI / 180;
+		return (this: Float3) * Constants.PI / 180;
 	}
 	public inline function degrees(): Float3 {
-		return (this: Float3) * 180 / Math.PI;
+		return (this: Float3) * 180 / Constants.PI;
 	}
 	public inline function sin(): Float3 {
 		return new Float3(
