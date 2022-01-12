@@ -3,18 +3,25 @@ package hvector;
 
 
 #if hl
-abstract Float2Array(hl.NativeArray<Float>)  from hl.NativeArray<Float> to hl.NativeArray<Float>  {
-
-
-    public function new( x : hl.NativeArray<Float> ) {
+abstract Float2Array(Array<Float>)  from Array<Float> to Array<Float>  {
+    public function new( x : Array<Float> ) {
         this = x;
     }
 
     public var length(get, never):Int;
 
 	extern inline function get_length():Int {
-		return this.length;
+		return Std.int(this.length / 2);
 	}
+
+    public inline function resize( len : Int ) {
+        this.resize(len * 2);
+    }
+
+    public inline function push( v : Float2 ) {
+        this.push(v.x);
+        this.push(v.y);
+    }
 
     @:arrayAccess inline function getv(k:Int) : Float2{
         return new Float2( this[k * 2], this[k * 2 + 1]);
@@ -25,8 +32,14 @@ abstract Float2Array(hl.NativeArray<Float>)  from hl.NativeArray<Float> to hl.Na
         this[k*2+1] = v.y;
       }
     
+      public static function empty(): Float2Array {
+        return new Array<Float>();
+    }
+
     public static function allocate(count): Float2Array {
-        return new Float2Array(new hl.NativeArray<Float>(count * 2));
+        var x = new Array<Float>();
+        x.resize(count);
+        return new Float2Array(x);
     }
 }
 
