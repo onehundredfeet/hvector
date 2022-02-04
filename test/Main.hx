@@ -1,7 +1,10 @@
-import TestFramework;
+package test;
+
+import test.TestFramework;
 import hvector.ShaderMath;
 import hvector.PolarVector2;
 import hvector.Quaternion;
+import hvector.*;
 
 // when comparing floats
 final precision = 1000000;

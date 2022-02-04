@@ -1,5 +1,5 @@
---class-path ../
---main Main
+--class-path 
+--main test.Main
 -lib test
 --dce full
 

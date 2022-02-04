@@ -1,7 +1,7 @@
 /**
 	TestFramework
 **/
-
+package test;
 import hvector.*;
 
 #if !macro
