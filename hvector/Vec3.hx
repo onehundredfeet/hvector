@@ -3,6 +3,9 @@ package hvector;
 // override Single (usually f64) type with f32
 //@:eager private typedef Single = Single;
 #end
+#if macro
+import hvector.macro.Swizzle;
+#end
 
 @:nullSafety
 abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
@@ -424,11 +427,11 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 
 	// macros
 	@:op(a.b) macro function swizzleRead(self, name: String) {
-		return ShaderMath.swizzleReadExpr(self, name);
+		return Swizzle.swizzleReadExpr(self, name);
 	}
 
 	@:op(a.b) macro function swizzleWrite(self, name: String, value) {
-		return ShaderMath.swizzleWriteExpr(self, name,  value);
+		return Swizzle.swizzleWriteExpr(self, name,  value);
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})

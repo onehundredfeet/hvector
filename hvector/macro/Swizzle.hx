@@ -1,4 +1,7 @@
-package hvector;
+package hvector.macro;
+
+#if macro
+import haxe.macro.Expr;
 
 /**
 	Macros required by VectorMath
@@ -9,7 +12,8 @@ package hvector;
 	stpq
 **/
 
-function swizzleReadExpr(self: haxe.macro.Expr, name: String) {
+class Swizzle {
+public static function swizzleReadExpr(self: haxe.macro.Expr, name: String) {
 	var f = fields(name);
 	var f0 = f[0];
 	var f1 = f[1];
@@ -41,7 +45,7 @@ function swizzleReadExpr(self: haxe.macro.Expr, name: String) {
 	}
 }
 
-function swizzleWriteExpr(self: haxe.macro.Expr, name: String, value) {
+public static function swizzleWriteExpr(self: haxe.macro.Expr, name: String, value) {
 	var f = fields(name);
 	var f0 = f[0];
 	var f1 = f[1];
@@ -103,7 +107,7 @@ function swizzleWriteExpr(self: haxe.macro.Expr, name: String, value) {
 	}
 }
 
-private function fields(swizzle: String): Array<String> {
+private static function fields(swizzle: String): Array<String> {
 	var c0 = swizzle.charAt(0);
 	return if (c0 >= 'w') { // xyzw
 		[for (i in 0...swizzle.length) swizzle.charAt(i)];
@@ -129,3 +133,5 @@ private function fields(swizzle: String): Array<String> {
 		}];
 	}
 }
+}
+#end

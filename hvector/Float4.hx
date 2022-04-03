@@ -3,7 +3,9 @@ package hvector;
 // override Float (usually f64) type with f32
 //@:eager private typedef Float = Single;
 #end
-
+#if macro
+import hvector.macro.SwizzleF;
+#end
 @:nullSafety
 abstract Float4(Float4Data) to Float4Data from Float4Data {
 
@@ -445,11 +447,11 @@ abstract Float4(Float4Data) to Float4Data from Float4Data {
 
 	// macros
 	@:op(a.b) macro function swizzleRead(self, name: String) {
-		return ShaderMathF.swizzleReadExprF(self, name);
+		return SwizzleF.swizzleReadExprF(self, name);
 	}
 
 	@:op(a.b) macro function swizzleWrite(self, name: String, value) {
-		return ShaderMathF.swizzleWriteExprF(self, name, value);
+		return SwizzleF.swizzleWriteExprF(self, name, value);
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})

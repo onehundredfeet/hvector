@@ -5,6 +5,10 @@ package hvector;
 //@:eager private typedef Single = Single;
 #end
 
+#if macro
+import hvector.macro.Swizzle;
+#end
+
 @:nullSafety
 abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 
@@ -388,11 +392,11 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 
 	// macros
 	@:op(a.b) macro function swizzleRead(self, name: String) {
-		return ShaderMath.swizzleReadExpr(self, name);
+		return Swizzle.swizzleReadExpr(self, name);
 	}
 
 	@:op(a.b) macro function swizzleWrite(self, name: String, value) {
-		return ShaderMath.swizzleWriteExpr(self, name,  value);
+		return Swizzle.swizzleWriteExpr(self, name,  value);
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})

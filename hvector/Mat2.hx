@@ -4,6 +4,10 @@ package hvector;
 //@:eager private typedef Single = Single;
 #end
 
+#if js
+import hvector.Single;
+#end
+
 abstract Mat2(Mat2Data) from Mat2Data to Mat2Data {
 
 	#if !macro

@@ -23,6 +23,10 @@ package hvector;
 //@:eager private typedef Single = Single;
 #end
 
+#if js
+import hvector.Single;
+#end
+
 overload extern inline function radians(degrees: Vec4): Vec4 return degrees.radians();
 overload extern inline function radians(degrees: Vec3): Vec3 return degrees.radians();
 overload extern inline function radians(degrees: Vec2): Vec2 return degrees.radians();
@@ -190,6 +194,20 @@ overload extern inline function smoothstep(edge0: Single, edge1: Single, v: Sing
 	var t = (v - edge0) / (edge1 - edge0);
 	t = t < 0. ? 0. : (t > 1. ? 1. : t); // clamp to 0, 1
 	return t * t * (3.0 - 2.0 * t);
+}
+
+overload extern inline function lerp(a: Vec4, b: Vec4, t: Single): Vec4 {
+	return a * (1.0 - t) + b * t;
+}
+overload extern inline function lerp(a: Vec3, b: Vec3, t: Single): Vec3 {
+	return a * (1.0 - t) + b * t;
+}
+overload extern inline function lerp(a: Vec2, b: Vec2, t: Single): Vec2 {
+	return a * (1.0 - t) + b * t;
+}
+
+overload extern inline function lerp(a: Single, b: Single, t: Single): Single {
+	return a * (1.0 - t) + b * t;	
 }
 
 // geometric
