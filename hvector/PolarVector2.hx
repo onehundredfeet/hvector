@@ -1,5 +1,6 @@
 package hvector;
 
+
 abstract PolarVector2F(Float2) {
 	public static inline function zero() {
 		return new PolarVector2F(0., 0.);
@@ -11,6 +12,11 @@ abstract PolarVector2F(Float2) {
 
 	public var angle(get, set):AngleF;
 	public var magnitude(get, set):Float;
+
+	@:op(A - B)
+	public inline function minus(rhs : PolarVector2F) : PolarVector2F {
+		return new PolarVector2F( angle - rhs.angle, magnitude - rhs.magnitude);
+	}
 
 	public inline function set_angle(angle:AngleF) {
 		this.x = angle;
