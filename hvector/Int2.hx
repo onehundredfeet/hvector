@@ -25,6 +25,14 @@ abstract Int2(Int2Data) to Int2Data from Int2Data {
 		this = new Int2Data(x, y);
 	}
 
+	public static inline function up() : Int2 return new Int2(0, 1); 
+	public static inline function down() : Int2 return new Int2(0, -1); 
+	public static inline function left() : Int2 return new Int2(-1, 0); 
+	public static inline function right() : Int2 return new Int2(1, 0); 
+	public static inline function one() : Int2 return new Int2(1, 1); 
+	public static inline function zero() : Int2 return new Int2(0, 0); 
+
+
 	public inline function copyFrom(v: Int2) {
 		x = v.x;
 		y = v.y;
