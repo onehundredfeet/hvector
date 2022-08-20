@@ -24,9 +24,14 @@ abstract Float4(Float4Data) to Float4Data from Float4Data {
 	inline function get_w() return this.w;
 	inline function set_w(v: Float) return this.w = v;
 
+	
 	public inline function new(x: Float, y: Float, z: Float, w: Float) {
 		this = new Float4Data(x, y, z, w);
 	}
+
+	public static inline function one() : Float4 return new Float4(1.0, 1.0, 1., 1.); 
+	public static inline function zero() : Float4 return new Float4(0.0, 0.0, 0., 0.); 
+	public static inline function positiveInfinity(): Float4  return new Float4(Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY); 
 
 	public inline function copyFrom(v: Float4) {
 		x = v.x;
