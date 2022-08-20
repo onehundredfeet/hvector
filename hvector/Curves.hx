@@ -7,7 +7,7 @@ class Curves {
 	// Cubic Interpolation
 	// p(t) = p0 * (1 - t)³ + p1 * t * 3 * (1 - t)² + p2 * t² * 3 * (1 - t) + p3 * t³
 	// Only valid 0....1
-	public inline static function evalCubicBezier3F( p0:Float3, p1:Float3, p2:Float3, p3:Float3, t:Float):Float3 {
+	public inline static function evalCubicBezier3F( t:Float, p0:Float3, p1:Float3, p2:Float3, p3:Float3):Float3 {
 		final one_minus_t = 1. - t;
 		final one_minus_t2 = one_minus_t * one_minus_t;
 		final t2 = t * t;
@@ -17,7 +17,7 @@ class Curves {
 
 		// Quadratic Interpolation
 	// p(t) = p0 * (1 - t)² + p1 * t * 2 * (1 - t) + p2 * t²
-	public static inline function evalQuadraticBezier3F(p0:Float3, p1:Float3, p2:Float3, t:Float):Float3 {
+	public static inline function evalQuadraticBezier3F(t:Float, p0:Float3, p1:Float3, p2:Float3 ):Float3 {
 		final one_minus_t = 1. - t;
 
 		return p0 * (one_minus_t * one_minus_t) + p1 * (t * 2. * one_minus_t) + p2 * (t * t);

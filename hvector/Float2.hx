@@ -26,6 +26,8 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	public static inline function one() : Float2 return new Float2(1.0, 1.0); 
 	public static inline function zero() : Float2 return new Float2(0.0, 0.0); 
 	public static inline function positiveInfinity(): Float2  return new Float2(Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY); 
+	public static inline function negativeInfinity(): Float2  return new Float2(Math.NEGATIVE_INFINITY, Math.NEGATIVE_INFINITY); 
+	public static inline function fromArray(a : Array<Float>, x = 0, y = 1): Float2  return new Float2(a[x], a[y]); 
 
 
 	public var x (get, set): Float;
