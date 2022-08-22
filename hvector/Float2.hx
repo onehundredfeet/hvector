@@ -38,10 +38,6 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	inline function set_y(v: Float) return this.y = v;
 
 
-	public inline static function fromArray( a : Array<Float> ) {
-		return new Float2(a[0], a[1]);
-	}
-
 	public inline function copyFrom(v: Float2) {
 		x = v.x;
 		y = v.y;
