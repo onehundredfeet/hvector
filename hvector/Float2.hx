@@ -29,6 +29,7 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	public static inline function negativeInfinity(): Float2  return new Float2(Math.NEGATIVE_INFINITY, Math.NEGATIVE_INFINITY); 
 	public static inline function fromArray(a : Array<Float>, x = 0, y = 1): Float2  return new Float2(a[x], a[y]); 
 	public inline function asArray() : Array<Float>  return [x, y];
+	public static inline function fromAngle( a : AngleF ): Float2  return a.toVector(Float2.right());
 
 	public var x (get, set): Float;
 	inline function get_x() return this.x;
