@@ -104,6 +104,10 @@ abstract AngleF (Float) to Float from Float{
   
           return new Float2( x1, y1 );
       }
+
+      public inline function toVectorRight(clockwise : Bool = false) : Float2 {
+        return toVector(Float2.right(), clockwise);
+    }
 }
 
 

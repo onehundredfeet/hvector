@@ -35,6 +35,10 @@ abstract PolarVector2F(Float2) {
 	public inline function get_magnitude():Float
 		return this.y;
 
+	public inline function toVectorRight(clockwise:Bool = false):Float2 {
+		return angle.toVector(Float2.right(), clockwise) * this.y;
+	}
+
 	public inline function toVectorUp(clockwise:Bool = false):Float2 {
 		return angle.toVector(Float2.up(), clockwise) * this.y;
 	}
@@ -67,9 +71,6 @@ inline function polarFromVectorOrDefault(basis:Float2, v:Float2, d:PolarVector2F
 	}
 	var unit = v / magnitude;
 
-	if (clockwise) {
-		return new PolarVector2F(basis.angle(unit, clockwise), magnitude);
-	}
 	return new PolarVector2F(basis.angle(unit, clockwise), magnitude);
 }
 
@@ -80,8 +81,5 @@ inline function polarFromVector(basis:Float2, v:Float2, clockwise:Bool = false):
 	}
 	var unit = v / magnitude;
 
-	if (clockwise) {
-		return new PolarVector2F(basis.angle(unit, clockwise), magnitude);
-	}
 	return new PolarVector2F(basis.angle(unit, clockwise), magnitude);
 }
