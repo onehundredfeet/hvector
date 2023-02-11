@@ -17,6 +17,8 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 	public static inline function right() : Float3 return new Float3(1.0, 0.0, 0.0); 
 	public static inline function one() : Float3 return new Float3(1.0, 1.0, 1.); 
 	public static inline function zero() : Float3 return new Float3(0.0, 0.0, 0.); 
+	public static inline function fromArray(a : Array<Float>, x = 0, y = 1, z = 2): Float3  return new Float3(a[x], a[y], a[z]); 
+
 	public static inline function positiveInfinity(): Float3  return new Float3(Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY); 
 
 

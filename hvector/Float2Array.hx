@@ -38,7 +38,7 @@ abstract Float2Array(Array<Float>)  from Array<Float> to Array<Float>  {
 
     public static function allocate(count): Float2Array {
         var x = new Array<Float>();
-        x.resize(count);
+        x.resize(count * 2);
         return new Float2Array(x);
     }
 }
