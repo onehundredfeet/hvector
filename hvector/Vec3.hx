@@ -33,6 +33,15 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return this;
 	}
 
+	public static inline function up() : Vec3 return new Vec3(0.0, 0.0, 1.0); 
+	public static inline function down() : Vec3 return new Vec3(0.0, 0.0, -1.0); 
+	public static inline function left() : Vec3 return new Vec3(-1.0, 0.0, 0.0); 
+	public static inline function right() : Vec3 return new Vec3(1.0, 0.0, 0.0); 
+	public static inline function one() : Vec3 return new Vec3(1.0, 1.0, 1.); 
+	public static inline function zero() : Vec3 return new Vec3(0.0, 0.0, 0.); 
+	public static inline function fromArray(a : Array<Float>, x = 0, y = 1, z = 2): Vec3  return new Vec3(a[x], a[y], a[z]); 
+
+
 	public inline function clone() {
 		return new Vec3(x, y, z);
 	}
