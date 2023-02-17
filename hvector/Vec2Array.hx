@@ -11,7 +11,7 @@ abstract Vec2Array(hl.NativeArray<Single>)  from hl.NativeArray<Single> to hl.Na
     public var length(get, never):Int;
 
 	extern inline function get_length():Int {
-		return this.length;
+		return Std.int(this.length / 2);
 	}
 
     @:arrayAccess inline function getv(k:Int) : Vec2{
