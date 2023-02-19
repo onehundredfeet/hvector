@@ -144,6 +144,7 @@ class VectorBuilder {
 			pos: pos,
 		};
 
+		/*
 		var fastSetterField:Field = {
 			name: "set" + fieldName,
 			access: [Access.APublic, Access.AInline],
@@ -151,7 +152,7 @@ class VectorBuilder {
 			kind: FieldType.FFun(makeSetFunction(vname, doubles, depth, false)),
 			pos: pos,
 		};
-
+		*/
 		var list = ["x", "y"];
 		if (depth >= 3)
 			list.push("z");
@@ -172,7 +173,7 @@ class VectorBuilder {
 		fields.push(propertyField);
 		fields.push(getterField);
 		fields.push(setterField);
-		fields.push(fastSetterField);
+		//fields.push(fastSetterField);
 
 		// trace(fields);
 		return fields;
@@ -189,6 +190,7 @@ class VectorBuilder {
 
 				switch (f.kind) {
 					case FVar(ct, e):
+//						trace('Embedding ${f.name} on ${Context.getLocalClass().get().name}');
 						var t:haxe.macro.Type = null;
 
 						if (ct == null) {
