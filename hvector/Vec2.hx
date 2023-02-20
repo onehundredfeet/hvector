@@ -14,6 +14,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 
 	#if !macro
 
+	
 	public var x (get, set): Single;
 	inline function get_x() return this.x;
 	inline function set_x(v: Single) return this.x = v;
@@ -24,6 +25,14 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	public inline function new(x: Single, y: Single) {
 		this = new Vec2Data(x, y);
 	}
+
+	public static inline function up() : Vec2 return new Vec2(0.0, 1.0); 
+	public static inline function down() : Vec2 return new Vec2(0.0, -1.0); 
+	public static inline function left() : Vec2 return new Vec2(-1.0, 0.0); 
+	public static inline function right() : Vec2 return new Vec2(1.0, 0.0); 
+	public static inline function one() : Vec2 return new Vec2(1.0, 1.0); 
+	public static inline function zero() : Vec2 return new Vec2(0.0, 0.0); 
+
 
 	public inline function copyFrom(v: Vec2) {
 		x = v.x;
