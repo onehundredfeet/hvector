@@ -50,6 +50,16 @@ abstract PolarVector2F(Float2) {
 	@:op(A - B)
 	inline function sub( rhs:PolarVector2F):PolarVector2F
 		return new PolarVector2F(angle - rhs.angle, magnitude - rhs.magnitude);
+
+	public inline static function fromVector(basis:Float2, v:Float2, clockwise:Bool = false):PolarVector2F {
+		var magnitude = v.length();
+		if (magnitude <= 0.00001) {
+			return new PolarVector2F(0.0, 0.0);
+		}
+		var unit = v / magnitude;
+
+		return new PolarVector2F(basis.angle(unit, clockwise), magnitude);
+	}
 }
 
 inline function scale(a:PolarVector2F, b:Float):PolarVector2F
