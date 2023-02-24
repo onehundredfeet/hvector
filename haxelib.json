@@ -5,8 +5,8 @@
 	"tags": ["vector", "math", "linear-algebra", "linear", "algebra", "matrix", "opengl", "glsl", "shader"],
 	"contributors": ["haxiomic", "onehundredfeet"],
 	"url": "https://github.com/onehundredfeet/hvector",
-	"version": "2.1.2",
-	"releasenote": "Fix issue reading single value using swizzle aliases ",
+	"version": "3.0.0",
+	"releasenote": "First separate release ",
 	"dependencies": {
 		"tink_macro": ""
 	  }
