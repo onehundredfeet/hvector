@@ -183,10 +183,10 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 	@:op([])
 	inline function arrayRead(i: Int)
 		return switch i {
-			case 0: this.c0.clone();
-			case 1: this.c1.clone();
-			case 2: this.c2.clone();
-			case 3: this.c3.clone();
+			case 0: this.c0;
+			case 1: this.c1;
+			case 2: this.c2;
+			case 3: this.c3;
 			default: null;
 		}
 
@@ -493,8 +493,6 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		Copies matrix elements in column-major order into a type that supports array-write access
 	**/
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
-	public macro function copyIntoArray(self: haxe.macro.Expr.ExprOf<Mat4>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Single>>, index: haxe.macro.Expr.ExprOf<Int>) {
-		return macro  {
 			var self = $self;
 			var array = $array;
 			var i: Int = $index;
@@ -506,7 +504,38 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		}
 	}
 
+	/**
+		Copies matrix elements in column-major order from a type that supports array-read access
+	**/
+	@:overload(function<T>(arrayLike: T, index: Int): Mat4 {})
+	public macro function copyFromArray(self: haxe.macro.Expr.ExprOf<Mat4>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Float>>, index: haxe.macro.Expr.ExprOf<Int>) {
+		return macro {
+			var self = $self;
+			var array = $array;
+			var i: Int = $index;
+			self[0].copyFromArray(array, i);
+			self[1].copyFromArray(array, i + 4);
+			self[2].copyFromArray(array, i + 8);
+			self[3].copyFromArray(array, i + 12);
+			self;
+		}
+	}
 
+	// static macros
+
+	@:overload(function<T>(arrayLike: T, index: Int): T {})
+	public static macro function fromArray(array: ExprOf<ArrayAccess<Float>>, index: ExprOf<Int>): ExprOf<Mat4> {
+		return macro {
+			var array = $array;
+			var i = $index;
+			new Mat4(
+				array[0 + i], array[1 + i], array[2 + i], array[3 + i],
+				array[4 + i], array[5 + i], array[6 + i], array[7 + i],
+				array[8 + i], array[9 + i], array[10 + i], array[11 + i],
+				array[12 + i], array[13 + i], array[14 + i], array[15 + i]
+			);
+		}
+	}
 
 }
 
