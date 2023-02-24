@@ -42,7 +42,7 @@ abstract Vec4(Vec4Data) to Vec4Data from Vec4Data {
 		this = new Vec4Data(x, y, z, w);
 	}
 
-	public inline function set(x: Float, y: Float, z: Float, w: Float) {
+	public inline function set(x: Single, y: Single, z: Single, w: Single) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -514,7 +514,7 @@ abstract Vec4(Vec4Data) to Vec4Data from Vec4Data {
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
-	public macro function copyFromArray(self: ExprOf<Vec4>, array: ExprOf<ArrayAccess<Float>>, index: ExprOf<Int>) {
+	public macro function copyFromArray(self: ExprOf<Vec4>, array: ExprOf<ArrayAccess<Single>>, index: ExprOf<Int>) {
 		return macro {
 			var self = $self;
 			var array = $array;
@@ -541,7 +541,7 @@ abstract Vec4(Vec4Data) to Vec4Data from Vec4Data {
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
-	public static macro function fromArray(array: ExprOf<ArrayAccess<Float>>, index: ExprOf<Int>): ExprOf<Vec4> {
+	public static macro function fromArray(array: ExprOf<ArrayAccess<Single>>, index: ExprOf<Int>): ExprOf<Vec4> {
 		return macro {
 			var array = $array;
 			var i = $index;

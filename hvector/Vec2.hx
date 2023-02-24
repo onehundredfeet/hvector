@@ -36,7 +36,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	public static inline function one() : Vec2 return new Vec2(1.0, 1.0); 
 	public static inline function zero() : Vec2 return new Vec2(0.0, 0.0); 
 
-	public inline function set(x: Float, y: Float) {
+	public inline function set(x: Single, y: Single) {
 		this.x = x;
 		this.y = y;
 	}
@@ -427,7 +427,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	 * Copy into any object with .x .y fields
 	 */
 	@:overload(function(target: {x: Float, y: Float}): {x: Float, y: Float} {})
-	public macro function copyInto(self: ExprOf<Vec2>, target: ExprOf<{x: Float, y: Float}>): ExprOf<{x: Float, y: Float}> {
+	public macro function copyInto(self: ExprOf<Vec2>, target: ExprOf<{x: Float, y: Float}>): ExprOf<{x: Single, y: Single}> {
 		return macro {
 			var self = $self;
 			var target = $target;
@@ -438,7 +438,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
-	public macro function copyIntoArray(self: ExprOf<Vec2>, array: ExprOf<ArrayAccess<Float>>, index: ExprOf<Int>) {
+	public macro function copyIntoArray(self: ExprOf<Vec2>, array: ExprOf<ArrayAccess<Single>>, index: ExprOf<Int>) {
 		return macro {
 			var self = $self;
 			var array = $array;
@@ -450,7 +450,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
-	public macro function copyFromArray(self: ExprOf<Vec2>, array: ExprOf<ArrayAccess<Float>>, index: ExprOf<Int>) {
+	public macro function copyFromArray(self: ExprOf<Vec2>, array: ExprOf<ArrayAccess<Single>>, index: ExprOf<Int>) {
 		return macro {
 			var self = $self;
 			var array = $array;

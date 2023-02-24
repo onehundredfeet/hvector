@@ -30,7 +30,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		this = new Vec3Data(x, y, z);
 	}
 
-	public inline function set(x: Float, y: Float, z: Float) {
+	public inline function set(x: Single, y: Single, z: Single) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -42,7 +42,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 	public static inline function right() : Vec3 return new Vec3(1.0, 0.0, 0.0); 
 	public static inline function one() : Vec3 return new Vec3(1.0, 1.0, 1.); 
 	public static inline function zero() : Vec3 return new Vec3(0.0, 0.0, 0.); 
-	public static inline function fromArray(a : Array<Float>, x = 0, y = 1, z = 2): Vec3  return new Vec3(a[x], a[y], a[z]); 
+	public static inline function fromArraySwizzle(a : Array<Single>, x = 0, y = 1, z = 2): Vec3  return new Vec3(a[x], a[y], a[z]); 
 
 
 	public inline function clone() {
@@ -465,7 +465,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 	 * Copy into any object with .x .y .z fields
 	 */
 	@:overload(function(target: {x: Float, y: Float, z: Float}): {x: Float, y: Float, z: Float} {})
-	public macro function copyInto(self: ExprOf<Vec3>, target: ExprOf<{x: Float, y: Float, z: Float}>): ExprOf<{x: Float, y: Float, z: Float}> {
+	public macro function copyInto(self: ExprOf<Vec3>, target: ExprOf<{x: Float, y: Float, z: Float}>): ExprOf<{x: Single, y: Single, z: Single}> {
 		return macro {
 			var self = $self;
 			var target = $target;
@@ -490,7 +490,7 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 	}
 
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
-	public macro function copyFromArray(self: ExprOf<Vec3>, array: ExprOf<ArrayAccess<Float>>, index: ExprOf<Int>) {
+	public macro function copyFromArray(self: ExprOf<Vec3>, array: ExprOf<ArrayAccess<Single>>, index: ExprOf<Int>) {
 		return macro {
 			var self = $self;
 			var array = $array;
