@@ -2,6 +2,7 @@ package hvector.macro;
 
 #if macro
 import haxe.macro.Expr;
+import haxe.macro.Context;
 
 /**
 	Macros required by VectorMath
@@ -14,7 +15,7 @@ import haxe.macro.Expr;
 
 class Swizzle {
 public static function swizzleReadExpr(self: haxe.macro.Expr, name: String) {
-	var f = fields(name);
+	var f = fields(name, self.pos);
 	var f0 = f[0];
 	var f1 = f[1];
 	var f2 = f[2];
@@ -46,7 +47,7 @@ public static function swizzleReadExpr(self: haxe.macro.Expr, name: String) {
 }
 
 public static function swizzleWriteExpr(self: haxe.macro.Expr, name: String, value) {
-	var f = fields(name);
+	var f = fields(name, self.pos);
 	var f0 = f[0];
 	var f1 = f[1];
 	var f2 = f[2];
@@ -107,7 +108,7 @@ public static function swizzleWriteExpr(self: haxe.macro.Expr, name: String, val
 	}
 }
 
-private static function fields(swizzle: String): Array<String> {
+private static function fields(swizzle: String, pos : Position): Array<String> {
 	var c0 = swizzle.charAt(0);
 	return if (c0 >= 'w') { // xyzw
 		[for (i in 0...swizzle.length) swizzle.charAt(i)];
@@ -118,7 +119,7 @@ private static function fields(swizzle: String): Array<String> {
 				case 'g': 'y';
 				case 'b': 'z';
 				case 'a': 'w';
-				case c: throw 'Vector component "$c" not in set rgba';
+				case c: Context.fatalError( 'Vector component "$c" not in set rgba', pos);
 			}
 		}];
 	} else { // stpq
