@@ -33,6 +33,10 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	public static inline function one() : Vec2 return new Vec2(1.0, 1.0); 
 	public static inline function zero() : Vec2 return new Vec2(0.0, 0.0); 
 
+	public inline function set(x: Float, y: Float) {
+		this.x = x;
+		this.y = y;
+	}
 
 	public inline function copyFrom(v: Vec2) {
 		x = v.x;
