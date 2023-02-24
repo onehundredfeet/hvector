@@ -493,6 +493,8 @@ abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 		Copies matrix elements in column-major order into a type that supports array-write access
 	**/
 	@:overload(function<T>(arrayLike: T, index: Int): T {})
+	public macro function copyIntoArray(self: haxe.macro.Expr.ExprOf<Mat4>, array: haxe.macro.Expr.ExprOf<ArrayAccess<Float>>, index: haxe.macro.Expr.ExprOf<Int>) {
+		return macro  {
 			var self = $self;
 			var array = $array;
 			var i: Int = $index;
