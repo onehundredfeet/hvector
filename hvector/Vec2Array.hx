@@ -1,10 +1,10 @@
 
 package hvector;
 #if hl
-abstract Vec2Array(hl.NativeArray<Single>)  from hl.NativeArray<Single> to hl.NativeArray<Single>  {
+abstract Vec2Array(Array<Single>)  from Array<Single> to Array<Single>  {
 
 
-    public function new( x : hl.NativeArray<Single> ) {
+    public function new( x : Array<Single> ) {
         this = x;
     }
 
@@ -13,6 +13,10 @@ abstract Vec2Array(hl.NativeArray<Single>)  from hl.NativeArray<Single> to hl.Na
 	extern inline function get_length():Int {
 		return Std.int(this.length / 2);
 	}
+
+    public function resize( count : Int ) {
+        this.resize( count * 2 );
+    }
 
     @:arrayAccess inline function getv(k:Int) : Vec2{
         return new Vec2( this[k * 2], this[k * 2 + 1]);
@@ -24,7 +28,9 @@ abstract Vec2Array(hl.NativeArray<Single>)  from hl.NativeArray<Single> to hl.Na
       }
     
     public static function allocate(count): Vec2Array {
-        return new Vec2Array(new hl.NativeArray<Single>(count * 2));
+        var x = new Vec2Array(new Array<Single>());
+        x.resize(count);
+        return x;
     }
 }
 

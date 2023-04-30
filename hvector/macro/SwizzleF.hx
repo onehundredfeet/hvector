@@ -64,7 +64,7 @@ public static function swizzleWriteExprF(self: haxe.macro.Expr, name: String, va
 
 			macro {
 				var self = $self;
-				var value: Float2 = $value;
+				var value: Float2S = $value;
 				self.$f0 = value.x;
 				self.$f1 = value.y;
 				value;
