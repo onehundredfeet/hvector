@@ -3,25 +3,28 @@ package hvector.macro;
 #if macro
 import haxe.macro.Expr;
 import haxe.macro.MacroStringTools;
+import haxe.macro.TypeTools;
 import haxe.macro.Context;
 
 using haxe.macro.TypeTools;
-using tink.MacroApi;
+
+using hvector.macro.Extensions;
 
 class VectorBuilder {
 	static final VECF_NAME = "hvector.Float";
 	static final VEC_NAME = "hvector.Vec";
+	static final VECI_NAME = "hvector.Int";
 
 	private static function makeReturnStatement(name:String, double:Bool, depth:Int):Expr {
 		var tname = (double ? VECF_NAME : VEC_NAME) + depth;
 		var tthis = macro $i{"this"};
-		var aa:Array<Expr> = [Exprs.field(tthis, name + "_x"), Exprs.field(tthis, name + "_y")];
+		var aa:Array<Expr> = [tthis.field( name + "_x"), tthis.field( name + "_y")];
 		if (depth >= 3)
-			aa.push(Exprs.field(tthis, name + "_z"));
+			aa.push(tthis.field( name + "_z"));
 		if (depth >= 4)
-			aa.push(Exprs.field(tthis, name + "_w"));
+			aa.push(tthis.field( name + "_w"));
 
-		var tp:TypePath = Types.asTypePath(tname);
+		var tp:TypePath = tname.asTypePath();
 
 		return macro return new $tp($a{aa});
 	}
@@ -31,7 +34,7 @@ class VectorBuilder {
 
 		var myFunc:Function = {
 			expr: makeReturnStatement(name, double, depth),
-			ret: Types.asComplexType(tname), // ret = return type
+			ret: tname.asComplexType(), // ret = return type
 			args: [] // no arguments here
 		}
 
@@ -44,28 +47,28 @@ class VectorBuilder {
 		var vname = macro $i{"v"};
 
 		var aa:Array<Expr> = [
-			Exprs.assign(Exprs.field(tthis, name + "_x"), Exprs.field(vname, "x")),
-			Exprs.assign(Exprs.field(tthis, name + "_y"), Exprs.field(vname, "y"))
+			tthis.field( name + "_x").assign( vname.field( "x")),
+			tthis.field( name + "_y").assign( vname.field( "y"))
 		];
 		if (depth >= 3)
-			aa.push(Exprs.assign(Exprs.field(tthis, name + "_z"), Exprs.field(vname, "z")));
+			aa.push(tthis.field( name + "_z").assign( vname.field( "z")));
 		if (depth >= 4)
-			aa.push(Exprs.assign(Exprs.field(tthis, name + "_w"), Exprs.field(vname, "w")));
+			aa.push(tthis.field( name + "_w").assign( vname.field( "w")));
 
 		if (addReturn) {
 			aa.push(makeReturnStatement(name, double, depth));
 		}
 
-		var tp:TypePath = Types.asTypePath(tname);
+		var tp:TypePath = tname.asTypePath();
 
 		var myArg:FunctionArg = {
 			name: "v",
-			type: Types.asComplexType(tname)
+			type: tname.asComplexType()
 		}
 		var args:Array<FunctionArg> = [myArg];
 
 		var myFastSetFunc:Function = {
-			expr: Exprs.toBlock(aa), // actual value
+			expr: aa.toBlock(), // actual value
 			ret: null, // ret = return type
 			args: args // vector4 incoming
 		}
@@ -163,7 +166,7 @@ class VectorBuilder {
 			var componentField:Field = {
 				name: fieldName + "_" + v,
 				access: isPublic ? [Access.APublic] : [],
-				kind: FieldType.FVar(macro:Float),
+				kind: FieldType.FVar(doubles? macro:Float : macro:Single),
 				pos: pos
 			}
 			fields.push(componentField);
@@ -193,14 +196,7 @@ class VectorBuilder {
 //						trace('Embedding ${f.name} on ${Context.getLocalClass().get().name}');
 						var t:haxe.macro.Type = null;
 
-						if (ct == null) {
-							var testType = e.typeof();
-							if (testType.isSuccess()) {
-								t = testType.sure();
-							}
-						} else {
-							t = Context.resolveType(ct, Context.currentPos());
-						}
+						t = Context.resolveType(ct, Context.currentPos());
 						if (t != null) {
 							t = t.follow();
 
@@ -213,11 +209,11 @@ class VectorBuilder {
 										newFields.push(vf);
 								case "hvector.Float4": for (vf in declareVector(f.name, true, 4, isPublic, f.meta))
 										newFields.push(vf);
-								case "hvector.Vec2": for (vf in declareVector(f.name, true, 2, isPublic, f.meta))
+								case "hvector.Vec2": for (vf in declareVector(f.name, false, 2, isPublic, f.meta))
 										newFields.push(vf);
-								case "hvector.Vec3": for (vf in declareVector(f.name, true, 3, isPublic, f.meta))
+								case "hvector.Vec3": for (vf in declareVector(f.name, false, 3, isPublic, f.meta))
 										newFields.push(vf);
-								case "hvector.Vec4": for (vf in declareVector(f.name, true, 4, isPublic, f.meta))
+								case "hvector.Vec4": for (vf in declareVector(f.name, false, 4, isPublic, f.meta))
 										newFields.push(vf);
 								default:
 									replaced = false;
