@@ -23,7 +23,7 @@ package hvector;
 //@:eager private typedef Single = Single;
 #end
 
-#if js
+#if (js || ucpp_runtime)
 import hvector.Single;
 #end
 
@@ -396,7 +396,7 @@ private inline function log2f(v: Single) {
 	var l2 = Math.log(v) * 1.4426950408889634;
 
 	// we must handle powers of 2 exactly to avoid unexpected behavior Singleing point values, e.g. log2(8) ~ 2.9999... which may later be used in floor()
-	var isPot = if (v % 1 == 0) {
+	var isPot = if (Std.int(v) % 1 == 0) {
 		// is integer
 		var i = Std.int(v);
 		(i & (i - 1)) == 0; // is power of 2

@@ -439,6 +439,8 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	static inline function notEqual(a: Float2, b: Float2): Bool
 		return !equal(a, b);
 
+
+	
 	#end // !macro
 
 	// macros
@@ -461,7 +463,7 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 			array;
 		}
 	}
-	
+
 }
 
 @:noCompletion

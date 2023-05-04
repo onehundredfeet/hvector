@@ -23,6 +23,10 @@ package hvector;
 //@:eager private typedef Float = Float;
 #end
 
+#if (js || ucpp_runtime)
+import hvector.Single;
+#end
+
 overload extern inline function radians(degrees: Float4): Float4 return degrees.radians();
 overload extern inline function radians(degrees: Float3): Float3 return degrees.radians();
 overload extern inline function radians(degrees: Float2): Float2 return degrees.radians();

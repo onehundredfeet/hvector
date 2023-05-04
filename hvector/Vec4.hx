@@ -7,6 +7,11 @@ import haxe.macro.Expr.ExprOf;
 // override Single (usually f64) type with f32
 //@:eager private typedef Single = Single;
 #end
+#if (js || ucpp_runtime)
+import hvector.Single;
+#end
+
+
 #if macro
 import hvector.macro.Swizzle;
 #end

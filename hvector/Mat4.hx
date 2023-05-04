@@ -4,6 +4,11 @@ package hvector;
 //@:eager private typedef Single = Single;
 #end
 
+#if (js || ucpp_runtime)
+import hvector.Single;
+#end
+
+
 abstract Mat4(Mat4Data) from Mat4Data to Mat4Data {
 
 	#if !macro
