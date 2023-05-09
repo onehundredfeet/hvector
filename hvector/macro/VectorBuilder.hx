@@ -7,63 +7,70 @@ import haxe.macro.TypeTools;
 import haxe.macro.Context;
 
 using haxe.macro.TypeTools;
-
 using hvector.macro.Extensions;
+using haxe.macro.ComplexTypeTools;
 
 class VectorBuilder {
 	static final VECF_NAME = "hvector.Float";
-	static final VEC_NAME = "hvector.Vec";
+	static final VECS_NAME = "hvector.Vec";
 	static final VECI_NAME = "hvector.Int";
 
-	private static function makeReturnStatement(name:String, double:Bool, depth:Int):Expr {
-		var tname = (double ? VECF_NAME : VEC_NAME) + depth;
-		var tthis = macro $i{"this"};
-		var aa:Array<Expr> = [tthis.field( name + "_x"), tthis.field( name + "_y")];
-		if (depth >= 3)
-			aa.push(tthis.field( name + "_z"));
-		if (depth >= 4)
-			aa.push(tthis.field( name + "_w"));
+	static function getVectorTypePrefix(fp:Bool, bits64:Bool) {
+		return (fp ? (bits64 ? VECF_NAME : VECS_NAME) : VECI_NAME);
+	}
 
-		var tp:TypePath = tname.asTypePath();
+	private static function makeReturnStatement(name:String, originalType:ComplexType, fp:Bool, double:Bool, depth:Int):Expr {
+		var tname =getVectorTypePrefix(fp, double) + depth;
+		var tthis = macro $i{"this"};
+		var aa:Array<Expr> = [tthis.field(name + "_x"), tthis.field(name + "_y")];
+		if (depth >= 3)
+			aa.push(tthis.field(name + "_z"));
+		if (depth >= 4)
+			aa.push(tthis.field(name + "_w"));
+
+		var tp:TypePath = switch (originalType) {
+			case TPath(p): p;
+			default: Context.fatalError("Type is not a type path", Context.currentPos());
+		}
 
 		return macro return new $tp($a{aa});
 	}
 
-	private static function makeGetFunction(name:String, double:Bool, depth:Int):Function {
-		var tname = (double ? VECF_NAME : VEC_NAME) + depth;
+	private static function makeGetFunction(name:String, originalType:ComplexType, fp:Bool, double:Bool, depth:Int):Function {
+		var tname = getVectorTypePrefix(fp, double) + depth;
 
 		var myFunc:Function = {
-			expr: makeReturnStatement(name, double, depth),
-			ret: tname.asComplexType(), // ret = return type
+			expr: makeReturnStatement(name, originalType, fp, double, depth),
+			ret: originalType, // ret = return type
 			args: [] // no arguments here
 		}
 
 		return myFunc;
 	}
 
-	private static function makeSetFunction(name:String, double:Bool, depth:Int, addReturn:Bool):Function {
-		var tname = (double ? VECF_NAME : VEC_NAME) + depth;
+	private static function makeSetFunction(name:String, originalType:ComplexType, fp:Bool, double:Bool, depth:Int, addReturn:Bool):Function {
+		var tname = getVectorTypePrefix(fp, double) + depth;
 		var tthis = macro $i{"this"};
 		var vname = macro $i{"v"};
 
 		var aa:Array<Expr> = [
-			tthis.field( name + "_x").assign( vname.field( "x")),
-			tthis.field( name + "_y").assign( vname.field( "y"))
+			tthis.field(name + "_x").assign(vname.field("x")),
+			tthis.field(name + "_y").assign(vname.field("y"))
 		];
 		if (depth >= 3)
-			aa.push(tthis.field( name + "_z").assign( vname.field( "z")));
+			aa.push(tthis.field(name + "_z").assign(vname.field("z")));
 		if (depth >= 4)
-			aa.push(tthis.field( name + "_w").assign( vname.field( "w")));
+			aa.push(tthis.field(name + "_w").assign(vname.field("w")));
 
 		if (addReturn) {
-			aa.push(makeReturnStatement(name, double, depth));
+			aa.push(makeReturnStatement(name, originalType, fp, double, depth));
 		}
 
 		var tp:TypePath = tname.asTypePath();
 
 		var myArg:FunctionArg = {
 			name: "v",
-			type: tname.asComplexType()
+			type: TPath(tp) // originalType
 		}
 		var args:Array<FunctionArg> = [myArg];
 
@@ -78,47 +85,47 @@ class VectorBuilder {
 	}
 
 	macro static public function float4(vname:String):Array<Field> {
-		return addVector(vname, true, 4);
+		return addVector(vname, macro :Float4, true, true, 4);
 	}
 
 	macro static public function float3(vname:String):Array<Field> {
-		return addVector(vname, true, 3);
+		return addVector(vname, macro :Float3, true, true, 3);
 	}
 
 	macro static public function float2(vname:String):Array<Field> {
-		return addVector(vname, true, 2);
+		return addVector(vname, macro :Float2, true, true, 2);
 	}
 
-	macro static public function fec4(vname:String):Array<Field> {
-		return addVector(vname, false, 4);
+	macro static public function vec4(vname:String):Array<Field> {
+		return addVector(vname, macro :Vec4, true, false, 4);
 	}
 
 	macro static public function vec3(vname:String):Array<Field> {
-		return addVector(vname, false, 3);
+		return addVector(vname, macro :Vec3, true, false, 3);
 	}
 
 	macro static public function vec2(vname:String):Array<Field> {
-		return addVector(vname, false, 2);
+		return addVector(vname, macro :Vec2, true, false, 2);
 	}
 
-	static function addVector(vname:String, doubles:Bool, depth:Int):Array<Field> {
+	static function addVector(vname:String, originalType:ComplexType, fp:Bool, bits64:Bool, depth:Int):Array<Field> {
 		var fields = Context.getBuildFields();
 
-		for (f in declareVector(vname, doubles, depth)) {
+		for (f in declareVector(vname, originalType, fp, bits64, depth)) {
 			fields.push(f);
 		}
 		return fields;
 	}
 
 	// must return into a program , not a value
-	static public function declareVector(vname:String, doubles:Bool, depth:Int, isPublic = true, ?m:Metadata):Array<Field> {
+	static public function declareVector(vname:String, originalType:ComplexType, fp:Bool, bits64:Bool, depth:Int, isPublic = true, ?m:Metadata):Array<Field> {
 		// get existing fields from the context from where build() is called
 		var fields = [];
 		var value = 0.0;
 		var pos = Context.currentPos();
 		var fieldName = vname;
 
-		var myGetFunc = makeGetFunction(vname, doubles, depth);
+		var myGetFunc = makeGetFunction(vname, originalType, fp, bits64, depth);
 
 		// create: `public var $fieldName(get,null)`
 		var propertyField:Field = {
@@ -143,30 +150,31 @@ class VectorBuilder {
 			name: "set_" + fieldName,
 			access: [Access.APrivate, Access.AInline],
 			//        kind: FieldType.FFun(mySetFunc),
-			kind: FieldType.FFun(makeSetFunction(vname, doubles, depth, true)),
+			kind: FieldType.FFun(makeSetFunction(vname, originalType, fp, bits64, depth, true)),
 			pos: pos,
 		};
 
 		/*
-		var fastSetterField:Field = {
-			name: "set" + fieldName,
-			access: [Access.APublic, Access.AInline],
-			// kind: FieldType.FFun(myFastSetFunc),
-			kind: FieldType.FFun(makeSetFunction(vname, doubles, depth, false)),
-			pos: pos,
-		};
-		*/
+			var fastSetterField:Field = {
+				name: "set" + fieldName,
+				access: [Access.APublic, Access.AInline],
+				// kind: FieldType.FFun(myFastSetFunc),
+				kind: FieldType.FFun(makeSetFunction(vname, bits64, depth, false)),
+				pos: pos,
+			};
+		 */
 		var list = ["x", "y"];
 		if (depth >= 3)
 			list.push("z");
 		if (depth >= 4)
 			list.push("w");
 
+		var ekind = fp ? (bits64 ? macro :Float : macro :Single) : (bits64 ? macro :haxe.Int64 : macro :Int);
 		for (v in list) {
 			var componentField:Field = {
 				name: fieldName + "_" + v,
 				access: isPublic ? [Access.APublic] : [],
-				kind: FieldType.FVar(doubles? macro:Float : macro:Single),
+				kind: FieldType.FVar(ekind),
 				pos: pos
 			}
 			fields.push(componentField);
@@ -176,7 +184,7 @@ class VectorBuilder {
 		fields.push(propertyField);
 		fields.push(getterField);
 		fields.push(setterField);
-		//fields.push(fastSetterField);
+		// fields.push(fastSetterField);
 
 		// trace(fields);
 		return fields;
@@ -187,42 +195,91 @@ class VectorBuilder {
 		try {
 			var newFields = [];
 
+			final tv2 = (macro :hvector.Vec2.Vec2Data).toType();
+			final tv3 = (macro :hvector.Vec3.Vec3Data).toType();
+			final tv4 = (macro :hvector.Vec4.Vec4Data).toType();
+			final tf2 = (macro :hvector.Float2.Float2Data).toType();
+			final tf3 = (macro :hvector.Float3.Float3Data).toType();
+			final tf4 = (macro :hvector.Float4.Float4Data).toType();
+			final ti2 = (macro :hvector.Int2.Int2Data).toType();
+			final ti3 = (macro :hvector.Int3.Int3Data).toType();
+			final ti4 = (macro :hvector.Int4.Int4Data).toType();
+
 			for (f in fields) {
 				var replaced = false;
 				var isPublic = (f.access == null || f.access.contains(APublic)) ? true : false;
 
 				switch (f.kind) {
 					case FVar(ct, e):
-//						trace('Embedding ${f.name} on ${Context.getLocalClass().get().name}');
+						//						trace('Embedding ${f.name} on ${Context.getLocalClass().get().name}');
 						var t:haxe.macro.Type = null;
 
 						if (ct == null) {
-							Context.fatalError('For now, vector embedding requires all fields have an explicite type: ${f.name}', f.pos);
-						}
-						t = Context.resolveType(ct, Context.currentPos());
-						if (t != null) {
-							t = t.follow();
+							var to = Context.typeof(e);
+							if (to != null) {
+								to = to.follow();
+								var vectorType = false;
 
-							var tt = t.toString();
-							replaced = true;
-							switch (tt) {
-								case "hvector.Float2": for (vf in declareVector(f.name, true, 2, isPublic, f.meta))
-										newFields.push(vf);
-								case "hvector.Float3": for (vf in declareVector(f.name, true, 3, isPublic, f.meta))
-										newFields.push(vf);
-								case "hvector.Float4": for (vf in declareVector(f.name, true, 4, isPublic, f.meta))
-										newFields.push(vf);
-								case "hvector.Vec2": for (vf in declareVector(f.name, false, 2, isPublic, f.meta))
-										newFields.push(vf);
-								case "hvector.Vec3": for (vf in declareVector(f.name, false, 3, isPublic, f.meta))
-										newFields.push(vf);
-								case "hvector.Vec4": for (vf in declareVector(f.name, false, 4, isPublic, f.meta))
-										newFields.push(vf);
-								default:
-									replaced = false;
+								if (Context.unify(tv2, to) || Context.unify(tv3, to) || Context.unify(tv4, to)) {
+									vectorType = true;
+								} else if (Context.unify(tf2, to) || Context.unify(tf3, to) || Context.unify(tf4, to)) {
+									vectorType = true;
+								} else if (Context.unify(ti2, to) || Context.unify(ti3, to) || Context.unify(ti4, to)) {
+									vectorType = true;
+								}
+
+								if (vectorType) {
+									t = to;
+								} else {
+									// Context.warning('Embedded type is not a vector: ${f.name} have ${to} ${to.followWithAbstracts()}', f.pos);
+								}
+								//							Context.fatalError('For now, vector embedding requires all fields have an explicite type: ${f.name} have ${to} ${to.followWithAbstracts()}', f.pos);
 							}
 						} else {
-							trace('Could not find type ${t.toString()}');
+							t = Context.resolveType(ct, Context.currentPos());
+						}
+						if (t != null) {
+							var originalType = t.toComplexType();
+
+							if (originalType.toString() != "Any") {
+								t = t.followWithAbstracts();
+								replaced = true;
+								if (Context.unify(t, tf2))
+									for (vf in declareVector(f.name, originalType, true, true, 2, isPublic, f.meta))
+										newFields.push(vf);
+								else if (Context.unify(t, tf3))
+									for (vf in declareVector(f.name, originalType, true, true, 3, isPublic, f.meta))
+										newFields.push(vf);
+								else if (Context.unify(t, tf4))
+									for (vf in declareVector(f.name, originalType, true, true, 4, isPublic, f.meta))
+										newFields.push(vf);
+								else if (Context.unify(t, tv2))
+									for (vf in declareVector(f.name, originalType, true, false, 2, isPublic, f.meta))
+										newFields.push(vf);
+								else if (Context.unify(t, tv3))
+									for (vf in declareVector(f.name, originalType, true, false, 3, isPublic, f.meta))
+										newFields.push(vf);
+								else if (Context.unify(t, tv4))
+									for (vf in declareVector(f.name, originalType, true, false, 4, isPublic, f.meta))
+										newFields.push(vf);
+								else if (Context.unify(t, ti2))
+									for (vf in declareVector(f.name, originalType, false, false, 2, isPublic, f.meta))
+										newFields.push(vf);
+								else if (Context.unify(t, ti3))
+									for (vf in declareVector(f.name, originalType, false, false, 3, isPublic, f.meta))
+										newFields.push(vf);
+								else if (Context.unify(t, ti4))
+									for (vf in declareVector(f.name, originalType, false, false, 4, isPublic, f.meta))
+										newFields.push(vf);
+								else {
+									// Context.warning('Ignoring ${f.name} is not find vector type, but found ${t}', f.pos);
+									replaced = false;
+								}
+							} else {
+								replaced = false;
+							}
+						} else {
+							// /Context.warning('Ignoring ${f.name} is not find vector type', f.pos);
 						}
 
 					default:
@@ -232,13 +289,15 @@ class VectorBuilder {
 					newFields.push(f);
 				}
 			}
-			/*
-				  var printer = new haxe.macro.Printer();
-				  trace('new fields ${newFields.length} vs ${fields.length}');
-				  for (f in newFields) {
-				trace ('${printer.printField(f)}');
-				  }
-			 */
+
+			var m = Context.getLocalClass().get().meta;
+			if (m.has(":vbprint")) {
+				var printer = new haxe.macro.Printer();
+				trace('new fields ${newFields.length} vs ${fields.length}');
+				for (f in newFields) {
+					trace('${printer.printField(f)}');
+				}
+			}
 
 			return newFields;
 		} catch (e) {

@@ -1,7 +1,9 @@
 package hvector;
 
+import hvector.Float2;
 
-abstract PolarVector2F(Float2) {
+
+abstract PolarVector2F(Float2) from Float2 to Float2 {
 	public static inline function zero() {
 		return new PolarVector2F(0., 0.);
 	}
