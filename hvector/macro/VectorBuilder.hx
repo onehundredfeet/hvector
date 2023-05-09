@@ -196,6 +196,9 @@ class VectorBuilder {
 //						trace('Embedding ${f.name} on ${Context.getLocalClass().get().name}');
 						var t:haxe.macro.Type = null;
 
+						if (ct == null) {
+							Context.fatalError('For now, vector embedding requires all fields have an explicite type: ${f.name}', f.pos);
+						}
 						t = Context.resolveType(ct, Context.currentPos());
 						if (t != null) {
 							t = t.follow();
@@ -239,7 +242,8 @@ class VectorBuilder {
 
 			return newFields;
 		} catch (e) {
-			Context.error('Could not embed vectors', Context.currentPos());
+			Context.error('Could not embed vectors message: ${e.message} details: ${e.details()}', Context.currentPos());
+			Context.fatalError('Stack ${e.stack}', Context.currentPos());
 			return null;
 		}
 	}
