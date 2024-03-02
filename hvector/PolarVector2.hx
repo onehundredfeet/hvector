@@ -62,6 +62,10 @@ abstract PolarVector2F(Float2) from Float2 to Float2 {
 
 		return new PolarVector2F(basis.angle(unit, clockwise), magnitude);
 	}
+
+	public inline function toString() {
+		return "(rad:" + angle + ", mag: " + magnitude + ")";
+	}
 }
 
 inline function scale(a:PolarVector2F, b:Float):PolarVector2F

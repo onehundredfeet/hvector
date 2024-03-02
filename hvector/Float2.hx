@@ -304,6 +304,15 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 			* (k < 0.0 ? 0.0 : 1.0); // if k < 0, result should be 0 vector
 	}
 
+	public inline function rotate( angle : AngleF ) : Float2 {
+		var s = Math.sin(angle);
+		var c = Math.cos(angle);
+
+		return new Float2(
+			x * c - y * s,
+			x * s + y * c
+		);
+	}
 	public inline function toString() {
 		return 'Float2(${x}, ${y})';
 	}
@@ -463,7 +472,6 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 			array;
 		}
 	}
-
 }
 
 @:noCompletion
@@ -479,4 +487,5 @@ class Float2Data {
 		this.y = y + 0.0;
 	}
 	#end
+
 }

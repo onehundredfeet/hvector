@@ -395,7 +395,11 @@ abstract Vec3(Vec3Data) to Vec3Data from Vec3Data {
 		return new Vec3(a.x * b.x, a.y * b.y, a.z * b.z);
 
 	@:op(a * b) @:commutative
-	static inline function mulScalar(a: Vec3, b: Single): Vec3
+	static inline function mulScalarS(a: Vec3, b: Single): Vec3
+		return new Vec3(a.x * b, a.y * b, a.z * b);
+
+	@:op(a * b) @:commutative
+	static inline function mulScalarF(a: Vec3, b: Float): Vec3
 		return new Vec3(a.x * b, a.y * b, a.z * b);
 
 	@:op(a / b)
