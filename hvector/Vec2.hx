@@ -167,6 +167,7 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	public inline function fract(): Vec2 {
 		return (this: Vec2) - floor();
 	}
+	
 	public extern overload inline function mod(d: Vec2): Vec2 {
 		return (this: Vec2) - d * ((this: Vec2) / d).floor();
 	}
@@ -233,9 +234,13 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 		return t * t * (3.0 - 2.0 * t);
 	}
 
+	
 	// Geometric
 	public inline function length(): Single {
 		return Math.sqrt(x*x + y*y);
+	}
+	public inline function lengthSquared(): Float {
+		return x*x + y*y;
 	}	
 	public inline function distance(b: Vec2): Single {
 		return (b - this).length();
@@ -243,13 +248,19 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 	public inline function dot(b: Vec2): Single {
 		return x * b.x + y * b.y;
 	}
+	public inline function projectOnto(a: Vec2): Vec2 {
+		return dot(a) / a.dot(a) * a;
+	}
+	public inline function project(a: Vec2): Vec2 {
+		var v: Vec2 = this;
+		return v * (dot(a) / dot(this));
+	}
 	public inline function normalize(): Vec2 {
 		var v: Vec2 = this;
 		var lenSq = v.dot(this);
 		var denominator = lenSq == 0.0 ? 1.0 : Math.sqrt(lenSq); // for 0 length, return zero vector rather than infinity
 		return v / denominator;
 	}
-
 	public inline function faceforward(I: Vec2, Nref: Vec2): Vec2 {
 		return new Vec2(x, y) * (Nref.dot(I) < 0 ? 1 : -1);
 	}
@@ -265,7 +276,30 @@ abstract Vec2(Vec2Data) to Vec2Data from Vec2Data {
 			(eta * I - (eta * nDotI + Math.sqrt(k)) * N)
 			* (k < 0.0 ? 0.0 : 1.0); // if k < 0, result should be 0 vector
 	}
+	public inline function perpendicular(clockwise : Bool = true ) : Vec2 {
+		if (clockwise) 
+			return new Vec2(y, -x);
+		return new Vec2(y, x);
+	}
+	public inline function angleAbs( b : Vec2) : AngleF {
+		var num = Math.sqrt( lengthSquared() * b.lengthSquared());
 
+		var x = dot( b ) / num;
+		var y = MathExt.clamp(x, -1., 1.);
+
+		return (num < 1.0000000036274937E-15) ? 0.0 : Math.acos( y );
+	}
+	
+	public inline function angle( b : Vec2, clockwise : Bool = false) : AngleF {
+		var dir = dot(b.perpendicular(clockwise));
+		var a = angleAbs(b);
+
+		var invert = dir < -0.0 ? -1.0 : 1.0;
+
+		return (a * invert).positive();
+	}
+	
+	
 	public inline function toString() {
 		return 'Vec2(${x}, ${y})';
 	}

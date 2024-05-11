@@ -280,7 +280,13 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	public inline function cross(b: Float2): Float {
 		return x * b.y - y * b.x;
 	}
-
+	public inline function projectOnto(a: Float2): Float2 {
+		return dot(a) / a.dot(a) * a;
+	}
+	public inline function project(a: Float2): Float2 {
+		var v: Float2 = this;
+		return (dot(a) / dot(this)) * v;
+	}
 	public inline function normalized(): Float2 {
 		var v: Float2 = this;
 		var lenSq = v.dot(this);
