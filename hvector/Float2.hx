@@ -264,6 +264,9 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 		return t * t * (3.0 - 2.0 * t);
 	}
 
+	public inline function isNonZero(): Bool
+		return x != 0.0 || y != 0.0;
+	
 	// Geometric
 	public inline function length(): Float {
 		return Math.sqrt(x*x + y*y);
@@ -455,6 +458,7 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 		return !equal(a, b);
 
 
+	
 	
 	#end // !macro
 
