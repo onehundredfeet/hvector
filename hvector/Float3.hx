@@ -296,6 +296,10 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 			* (k < 0.0 ? 0.0 : 1.0); // if k < 0, result should be 0 vector
 	}
 
+	public inline function nearZero(): Bool {
+		return Math.abs(x) < Constants.EPSILON && Math.abs(y) < Constants.EPSILON && Math.abs(z) < Constants.EPSILON;
+	}
+
 	public inline function toString() {
 		return 'Float3(${x}, ${y}, ${z})';
 	}
@@ -433,6 +437,13 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 	static inline function notEqual(a: Float3, b: Float3): Bool
 		return !equal(a, b);
 
+	public inline function toArray(): Array<Float> {
+		return [x, y, z];
+	}
+	public inline function toFloat3Array(): Float3A {
+		return [x, y, z];
+	}
+	
 	#end // !macro
 
 	// macros
@@ -456,7 +467,6 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 			array;
 		}
 	}
-	
 }
 
 @:noCompletion
@@ -473,6 +483,51 @@ class Float3Data {
 		this.y = y + 0.0;
 		this.z = z + 0.0;
 	}
+
+	public function toString():String {
+        return 'Float3Data(' + x + ', ' + y + ', ' + z + ')';
+    }
+	#end
+}
+
+
+@:forward
+abstract Float3A(Array<Float>) from Array<Float> {
+	@:arrayAccess public inline function get(index : Int)
+	{
+		return this[index];
+	}
+
+	@:arrayAccess public inline function set(index : Int, value : Float)
+	{
+		this[index] = value;
+		return value;
+	}
+
+	public var x(get, set): Float;
+	inline function get_x() return this[0];
+	inline function set_x(v: Float) return this[0] = v;
+
+	public var y(get, set): Float;
+	inline function get_y() return this[1];
+	inline function set_y(v: Float) return this[1] = v;
+
+	public var z(get, set): Float;
+	inline function get_z() return this[2];
+	inline function set_z(v: Float) return this[2] = v;
+
+	#if !macro
+	@:op(a - b)
+	static inline function subAA(a: Float3A, b: Float3A): Float3
+		return new Float3(a.x - b.x, a.y - b.y, a.z - b.z);
+
+	@:op(a - b)
+	static inline function subA3(a: Float3A, b: Float3): Float3
+		return new Float3(a.x - b.x, a.y - b.y, a.z - b.z);
+
+	@:op(a - b)
+	static inline function sub3A(a: Float3, b: Float3A): Float3
+		return new Float3(a.x - b.x, a.y - b.y, a.z - b.z);
 	#end
 }
 

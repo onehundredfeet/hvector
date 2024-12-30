@@ -491,5 +491,9 @@ class Float4Data {
 		this.z = z + 0.0;
 		this.w = w + 0.0;
 	}
+
+	public inline function toString() {
+		return 'Float4Data(${x}, ${y}, ${z}, ${w})';
+	}
 	#end
 }

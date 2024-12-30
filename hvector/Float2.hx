@@ -496,6 +496,10 @@ class Float2Data {
 		this.x = x + 0.0;
 		this.y = y + 0.0;
 	}
+	public function toString():String {
+        return 'Float2(' + x + ', ' + y + ')';
+    }
+
 	#end
 
 }
