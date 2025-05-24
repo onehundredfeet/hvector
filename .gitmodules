@@ -1,3 +1,0 @@
-[submodule "ext/math"]
-	path = ext/math
-	url = https://github.com/cfnptr/math.git
