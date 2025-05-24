@@ -1,0 +1,3 @@
+[submodule "ext/math"]
+	path = ext/math
+	url = https://github.com/onehundredfeet/math.git
