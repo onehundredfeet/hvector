@@ -12,10 +12,10 @@ import hvector.macro.SwizzleF;
 
 @:nullSafety
 abstract Float2(Float2Data) to Float2Data from Float2Data {
-	#if !macro
 	public inline function new(x: Float, y: Float) {
 		this = new Float2Data(x, y);
 	}
+	#if !macro
 
 	// I have this sneaking suspicion the compiler will NOT inline these
 	// it's really more than a suspicion
@@ -322,6 +322,12 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 			x * s + y * c
 		);
 	}
+
+	public inline function assign(x: Float, y: Float): Float2 {
+		this.x = x;
+		this.y = y;
+		return this;
+	}
 	public inline function toString() {
 		return 'Float2(${x}, ${y})';
 	}
@@ -487,7 +493,6 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 @:noCompletion
 @:struct
 class Float2Data {
-	#if !macro
 	public var x: Float;
 	public var y: Float;
 
@@ -499,7 +504,5 @@ class Float2Data {
 	public function toString():String {
         return 'Float2(' + x + ', ' + y + ')';
     }
-
-	#end
 
 }
