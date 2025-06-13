@@ -40,6 +40,10 @@ abstract AngleF (Float) to Float from Float{
       return this;
     }
 
+    inline public function halfAngleTan() : Float {
+        return Math.tan(this * 0.5);
+    }
+    
     inline public function rad() : Float return this;
     inline public function deg() : Float return this * (180.0 / Constants.PI);
     inline public function magnituderad() : Float {
