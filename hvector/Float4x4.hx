@@ -356,6 +356,24 @@ abstract Float4x4(Float4x4Data) from Float4x4Data to Float4x4Data {
 		);
 	}
 
+	public inline function postMulPoint3(v: Float3): Float3 {
+		var m: Float4x4Data = this;
+		return new Float3(
+			m.c0x * v.x + m.c1x * v.y + m.c2x * v.z + m.c3x,
+			m.c0y * v.x + m.c1y * v.y + m.c2y * v.z + m.c3y,
+			m.c0z * v.x + m.c1z * v.y + m.c2z * v.z + m.c3z
+		);
+	}
+
+	public inline function postMulVector3( v: Float3): Float3 {
+		var m: Float4x4Data = this;
+		return new Float3(
+			m.c0x * v.x + m.c1x * v.y + m.c2x * v.z,
+			m.c0y * v.x + m.c1y * v.y + m.c2y * v.z,
+			m.c0z * v.x + m.c1z * v.y + m.c2z * v.z
+		);
+	}
+
 	@:op(a * b)
 	static inline function preMulFloat4(v: Float4, m: Float4x4): Float4 {
 		var m: Float4x4Data = m;
@@ -368,6 +386,24 @@ abstract Float4x4(Float4x4Data) from Float4x4Data to Float4x4Data {
 			// v.dot(m.c1),
 			// v.dot(m.c2),
 			// v.dot(m.c3)
+		);
+	}
+
+	public inline function preMulPoint3(v: Float3): Float3 {
+		var m: Float4x4Data = this;
+		return new Float3(
+			v.x * m.c0x + v.y * m.c0y + v.z * m.c0z + m.c0w, 
+			v.x * m.c1x + v.y * m.c1y + v.z * m.c1z + m.c1w,
+			v.x * m.c2x + v.y * m.c2y + v.z * m.c2z + m.c2w
+		);
+	}
+
+	public inline function preMulVector3(v: Float3): Float3 {
+		var m: Float4x4Data = this;
+		return new Float3(
+			v.x * m.c0x + v.y * m.c0y + v.z * m.c0z, 
+			v.x * m.c1x + v.y * m.c1y + v.z * m.c1z,
+			v.x * m.c2x + v.y * m.c2y + v.z * m.c2z
 		);
 	}
 
@@ -441,6 +477,93 @@ abstract Float4x4(Float4x4Data) from Float4x4Data to Float4x4Data {
 			(cosz * siny * cosx + sinz * sinx) * scaleZ, (sinz * siny * cosx - cosz * sinx) * scaleZ, cosy * cosx * scaleZ, 0, // column3
 			translation.x, translation.y, translation.z, 1 // column4
 		);
+	}
+
+	public function setSRT( scale: Float3, rotation: Float3, translation: Float3 ): Float4x4 {
+		var scaleX = scale.x;
+		var scaleY = scale.y;
+		var scaleZ = scale.z;
+		var cosx = Math.cos(rotation.x);
+		var cosy = Math.cos(rotation.y);
+		var cosz = Math.cos(rotation.z);
+		var sinx = Math.sin(rotation.x);
+		var siny = Math.sin(rotation.y);
+		var sinz = Math.sin(rotation.z);
+
+		this.c0x = cosz * cosy * scaleX;
+		this.c0y = sinz * cosy * scaleX;
+		this.c0z = -siny * scaleX;
+		this.c0w = 0;
+
+		this.c1x = (cosz * siny * sinx - sinz * cosx) * scaleY;
+		this.c1y = (sinz * siny * sinx + cosz * cosx) * scaleY;
+		this.c1z = cosy * sinx * scaleY;
+		this.c1w = 0;
+
+		this.c2x = (cosz * siny * cosx + sinz * sinx) * scaleZ;
+		this.c2y = (sinz * siny * cosx - cosz * sinx) * scaleZ;
+		this.c2z = cosy * cosx * scaleZ;
+		this.c2w = 0;
+
+		this.c3x = translation.x;
+		this.c3y = translation.y;
+		this.c3z = translation.z;
+		this.c3w = 1;
+
+		return this;
+	}
+
+	public function setPerspectiveRH( fov: Float, aspect: Float, near: Float, far: Float ): Float4x4 {
+		var f = 1.0 / Math.tan(fov * 0.5);
+		this.c0x = f / aspect;
+		this.c0y = 0;
+		this.c0z = 0;
+		this.c0w = 0;
+
+		this.c1x = 0;
+		this.c1y = f;
+		this.c1z = 0;
+		this.c1w = 0;
+
+		this.c2x = 0;
+		this.c2y = 0;
+		this.c2z = (far + near) / (near - far);
+		this.c2w = -1;
+
+		this.c3x = 0;
+		this.c3y = 0;
+		this.c3z = (2 * far * near) / (near - far);
+		this.c3w = 0;
+
+		return this;
+	}
+
+	public function setLookAt( eye: Float3, target: Float3, up: Float3): Float4x4 {
+		var zaxis = (eye - target).normalized();
+		var xaxis = up.cross(zaxis).normalized();
+		var yaxis = zaxis.cross(xaxis);
+
+		this.c0x = xaxis.x;
+		this.c0y = yaxis.x;
+		this.c0z = zaxis.x;
+		this.c0w = 0;
+
+		this.c1x = xaxis.y;
+		this.c1y = yaxis.y;
+		this.c1z = zaxis.y;
+		this.c1w = 0;
+
+		this.c2x = xaxis.z;
+		this.c2y = yaxis.z;
+		this.c2z = zaxis.z;
+		this.c2w = 0;
+
+		this.c3x = -xaxis.dot(eye);
+		this.c3y = -yaxis.dot(eye);
+		this.c3z = -zaxis.dot(eye);
+		this.c3w = 1;
+
+		return this;
 	}
 	static inline final SIGNIFICANCE = 1e6;
 	
