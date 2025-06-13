@@ -1,0 +1,10 @@
+<xml>
+   <cppflag value="-I${HVECTOR_IDL_DIR}/../../ext/math/include"/>
+
+   <cppflag value="-I${FIRE_IDL_DIR}/../src"/>
+   <cppflag value="-I${FIRE_LIB_DIR}/include"/>
+   
+   <findlib value="fire" dir="${FIRE_LIB_DIR}/lib/cmake/fire" link="true"/>
+
+
+</xml>
