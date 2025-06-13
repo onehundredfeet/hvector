@@ -1,2 +1,4 @@
 hvector/.DS_Store
 dist
+build
+.haxelib
