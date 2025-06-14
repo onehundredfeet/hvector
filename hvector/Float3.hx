@@ -232,6 +232,12 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 		return (b - this).length();
 	}
 
+	public inline function distanceXY(x : Float, y:Float): Float {
+		var dx = this.x - x;
+		var dy = this.y - y;
+		return Math.sqrt(dx * dx + dy * dy);
+	}
+
 	public inline function dot(b:Float3):Float {
 		return x * b.x + y * b.y + z * b.z;
 	}
@@ -414,6 +420,10 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 	@:op(b - a)
 	static inline function subScalarInv(a:Float, b:Float3):Float3
 		return new Float3(a - b.x, a - b.y, a - b.z);
+
+	public inline function subXY(x:Float, y:Float):Float2
+		return new Float2(this.x - x, this.y - y);
+
 
 	@:op(a == b)
 	static inline function equal(a:Float3, b:Float3):Bool

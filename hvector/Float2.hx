@@ -277,6 +277,13 @@ abstract Float2(Float2Data) to Float2Data from Float2Data {
 	public inline function distance(b: Float2): Float {
 		return (b - this).length();
 	}
+
+	public inline function distanceXY(x : Float, y:Float): Float {
+		var dx = this.x - x;
+		var dy = this.y - y;
+		return Math.sqrt(dx * dx + dy * dy);
+	}
+
 	public inline function dot(b: Float2): Float {
 		return x * b.x + y * b.y;
 	}
