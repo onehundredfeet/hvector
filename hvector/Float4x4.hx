@@ -479,6 +479,23 @@ abstract Float4x4(Float4x4Data) from Float4x4Data to Float4x4Data {
 		);
 	}
 
+	public static function makeSRTXYZ( scaleX : Float, scaleY : Float, scaleZ:Float,
+										rot_x : Float, rot_y : Float, rot_z : Float,
+										trans_x : Float, trans_y : Float, trans_z : Float ): Float4x4 {
+		var cosx = Math.cos(rot_x);
+		var cosy = Math.cos(rot_y);
+		var cosz = Math.cos(rot_z);
+		var sinx = Math.sin(rot_x);
+		var siny = Math.sin(rot_y);
+		var sinz = Math.sin(rot_z);
+		return new Float4x4(
+			cosz * cosy * scaleX, sinz * cosy * scaleX, -siny * scaleX, 0, // column1
+			(cosz * siny * sinx - sinz * cosx) * scaleY, (sinz * siny * sinx + cosz * cosx) * scaleY, cosy * sinx * scaleY, 0, // column2
+			(cosz * siny * cosx + sinz * sinx) * scaleZ, (sinz * siny * cosx - cosz * sinx) * scaleZ, cosy * cosx * scaleZ, 0, // column3
+			trans_x, trans_y, trans_z, 1 // column4
+		);
+	}
+
 	public function setSRT( scale: Float3, rotation: Float3, translation: Float3 ): Float4x4 {
 		var scaleX = scale.x;
 		var scaleY = scale.y;

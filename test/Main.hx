@@ -39,6 +39,7 @@ inline function quatRotationBetween(v1: Vec3, v2: Vec3) {
 }
 
 function main() {
+	trace("Running tests...");
 	testsStart();
 
 	test(sign(1) == 1);
@@ -843,6 +844,8 @@ function main() {
 	
 
 	testsComplete();
+
+	trace('Done');
 }
 
 overload extern inline function limitPrecision(x: Float): Float return floor(x * precision) / precision;

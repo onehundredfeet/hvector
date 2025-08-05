@@ -1,7 +1,8 @@
 --class-path 
 --main test.Main
 -lib test
---dce full
+--dce std
+
 
 # this is too good – most tests run at compiletime!
 # -D analyzer-optimize

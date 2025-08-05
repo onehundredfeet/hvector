@@ -269,14 +269,14 @@ abstract Float3(Float3Data) to Float3Data from Float3Data {
 		return Math.abs(x) < Constants.EPSILON && Math.abs(y) < Constants.EPSILON && Math.abs(z) < Constants.EPSILON;
 	}
 
-	public inline function assign(x:Float, y:Float, z:Float):Float3 {
+	public inline function assignXYZ(x:Float, y:Float, z:Float):Float3 {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		return this;
 	}
 
-	public inline function assign3(v:Float3):Float3 {
+	public inline function assign(v:Float3):Float3 {
 		this.x = v.x;
 		this.y = v.y;
 		this.z = v.z;
